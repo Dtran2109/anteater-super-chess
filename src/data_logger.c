@@ -170,7 +170,7 @@ void writeTrainingCsvHeader(FILE *out) {
             "eval_total,eval_material,eval_mobility,eval_pawn_progress,"
             "eval_anteater_activity,eval_king_safety,eval_hanging_pieces,"
             "eval_king_escape,eval_anteater_capture_potential,eval_passed_pawns,"
-            "final_result_for_side,board\n");
+            "eval_pawn_structure,final_result_for_side,board\n");
 }
 
 void writeTrainingSampleCsv(FILE *out, const TrainingSample *sample, int finalResultForSide) {
@@ -186,6 +186,7 @@ void writeTrainingSampleCsv(FILE *out, const TrainingSample *sample, int finalRe
     int evalKingEscape;
     int evalAnteaterCapturePotential;
     int evalPassedPawns;
+    int evalPawnStructure;
 
     if (out == NULL || sample == NULL) return;
 
@@ -202,9 +203,10 @@ void writeTrainingSampleCsv(FILE *out, const TrainingSample *sample, int finalRe
     evalKingEscape = evaluateKingEscapeSquares(&sample->stateBefore, sample->sideToMove);
     evalAnteaterCapturePotential = evaluateAnteaterCapturePotential(&sample->stateBefore, sample->sideToMove);
     evalPassedPawns = evaluatePassedPawns(&sample->stateBefore, sample->sideToMove);
+    evalPawnStructure = evaluatePawnStructure(&sample->stateBefore, sample->sideToMove);
 
     fprintf(out,
-            "%d,%d,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s\n",
+            "%d,%d,%s,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s\n",
             sample->gameId,
             sample->ply,
             sideToString(sample->sideToMove),
@@ -220,6 +222,7 @@ void writeTrainingSampleCsv(FILE *out, const TrainingSample *sample, int finalRe
             evalKingEscape,
             evalAnteaterCapturePotential,
             evalPassedPawns,
+            evalPawnStructure,
             finalResultForSide,
             board);
 }

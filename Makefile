@@ -72,9 +72,10 @@ install:
 	@echo "Build full app:            make"
 	@echo "Run full app:              ./$(APP_BIN)"
 	@echo "Build engine tester:       make engine_match"
-	@echo "Run engine tester:         ./$(ENGINE_MATCH_BIN) 20 6 test/run1"
+	@echo "Run engine tester:         ./$(ENGINE_MATCH_BIN) 20 6 test/run1 10 1000 fast 1024"
 	@echo "Build self-play generator: make selfplay"
-	@echo "Run self-play:             ./$(SELFPLAY_BIN) training_data.csv 3000 120"
+	@echo "Run self-play:             ./$(SELFPLAY_BIN) training_data.csv 3000 120 10 1000 fast 23 1 1024"
+	@echo "Run parallel self-play:    ./scripts/run_selfplay_parallel.sh training_data.csv 3000 120 10 1000 fast 30 23 20480"
 
 clean:
 	rm -rf $(BIN_DIR)

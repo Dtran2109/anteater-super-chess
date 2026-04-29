@@ -13,5 +13,4 @@ int isCheckmate(const GameState *state, PieceColor side);
 int isStalemate(const GameState *state, PieceColor side);
 int isKingDead(const GameState *state, PieceColor side);
 const char *getResultMessage(const GameState *state);
-static int isMoveLegalFast(GameState *state, Move move, PieceColor side);
 #endif

@@ -37,6 +37,7 @@ FEATURES = [
     "eval_king_escape",
     "eval_anteater_capture_potential",
     "eval_passed_pawns",
+    "eval_pawn_structure",
 ]
 
 # By default, material stays in the base evaluator only.
@@ -50,6 +51,7 @@ DEFAULT_RESIDUAL_FEATURES = [
     "eval_king_escape",
     "eval_anteater_capture_potential",
     "eval_passed_pawns",
+    "eval_pawn_structure",
 ]
 
 HEADER_GUARD = "GENERATED_EVAL_WEIGHTS_H"
@@ -356,7 +358,8 @@ def write_header(path: str, bias: float, weights: Dict[str, float], args: argpar
         f.write(f"#define EVAL_WEIGHT_HANGING_PIECES {weights['eval_hanging_pieces']:.12f}\n")
         f.write(f"#define EVAL_WEIGHT_KING_ESCAPE {weights['eval_king_escape']:.12f}\n")
         f.write(f"#define EVAL_WEIGHT_ANTEATER_CAPTURE_POTENTIAL {weights['eval_anteater_capture_potential']:.12f}\n")
-        f.write(f"#define EVAL_WEIGHT_PASSED_PAWNS {weights['eval_passed_pawns']:.12f}\n\n")
+        f.write(f"#define EVAL_WEIGHT_PASSED_PAWNS {weights['eval_passed_pawns']:.12f}\n")
+        f.write(f"#define EVAL_WEIGHT_PAWN_STRUCTURE {weights['eval_pawn_structure']:.12f}\n\n")
         f.write(f"#endif /* {HEADER_GUARD} */\n")
 
 

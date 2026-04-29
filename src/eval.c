@@ -42,6 +42,9 @@
 #ifndef EVAL_WEIGHT_PASSED_PAWNS
 #define EVAL_WEIGHT_PASSED_PAWNS 0.0
 #endif
+#ifndef EVAL_WEIGHT_PAWN_STRUCTURE
+#define EVAL_WEIGHT_PAWN_STRUCTURE 0.0
+#endif
 
 #define LEARNED_BONUS_SCALE 0.15
 static int g_pstScalePercent = 50;
@@ -458,6 +461,108 @@ int evaluatePassedPawns(const GameState *state, PieceColor side) {
 
     return score;
 }
+
+//precondition: Take in the game state and side color
+//postcondition: Return the pawn structure score for that side
+int evaluatePawnStructure(const GameState *state, PieceColor side)
+{
+    int row;
+    int col;
+    int score = 0;
+    int whiteFileCount[BOARD_COLS] = {0};
+    int blackFileCount[BOARD_COLS] = {0};
+
+    for (row = 0; row < BOARD_ROWS; row++)
+    {
+        for (col = 0; col < BOARD_COLS; col++)
+        {
+            ChessPiece pawn = state->squares[row][col];
+
+            if (pawn.type != PAWN)
+            {
+                continue;
+            }
+
+            if (pawn.color == WHITE)
+            {
+                whiteFileCount[col]++;
+            }
+            else if (pawn.color == BLACK)
+            {
+                blackFileCount[col]++;
+            }
+        }
+    }
+
+    for (row = 0; row < BOARD_ROWS; row++)
+    {
+        for (col = 0; col < BOARD_COLS; col++)
+        {
+            ChessPiece pawn = state->squares[row][col];
+            int local = 0;
+            int *fileCount;
+            int hasAdjacentFilePawn = 0;
+            int hasConnectedPawn = 0;
+            int dc;
+
+            if (pawn.type != PAWN || pawn.color == NONE)
+            {
+                continue;
+            }
+
+            fileCount = (pawn.color == WHITE) ? whiteFileCount : blackFileCount;
+
+            if (fileCount[col] > 1)
+            {
+                local -= 14 * (fileCount[col] - 1);
+            }
+
+            for (dc = -1; dc <= 1; dc += 2)
+            {
+                int adjFile = col + dc;
+                int supportRow = (pawn.color == WHITE) ? row + 1 : row - 1;
+
+                if (adjFile < 0 || adjFile >= BOARD_COLS)
+                {
+                    continue;
+                }
+
+                if (fileCount[adjFile] > 0)
+                {
+                    hasAdjacentFilePawn = 1;
+                }
+
+                if (isInsideLocal(supportRow, adjFile) &&
+                    state->squares[supportRow][adjFile].type == PAWN &&
+                    state->squares[supportRow][adjFile].color == pawn.color)
+                {
+                    hasConnectedPawn = 1;
+                }
+
+                if (isInsideLocal(row, adjFile) &&
+                    state->squares[row][adjFile].type == PAWN &&
+                    state->squares[row][adjFile].color == pawn.color)
+                {
+                    hasConnectedPawn = 1;
+                }
+            }
+
+            if (!hasAdjacentFilePawn)
+            {
+                local -= 18;
+            }
+
+            if (hasConnectedPawn)
+            {
+                local += 16;
+            }
+
+            score += scoreSign(pawn, side) * local;
+        }
+    }
+
+    return score;
+}
 static int getPieceSquareBonus(PieceType type, PieceColor color, int row, int col)
 {
     int tableRow;
@@ -544,6 +649,7 @@ int evaluatePosition(const GameState *state, PieceColor side) {
     int kingEscape;
     int anteaterCapturePotential;
     int passedPawns;
+    int pawnStructure;
     int score;
     double learned;
     PieceColor enemy = oppositeColorLocal(side);
@@ -561,6 +667,7 @@ int evaluatePosition(const GameState *state, PieceColor side) {
     kingEscape = evaluateKingEscapeSquares(state, side);
     anteaterCapturePotential = evaluateAnteaterCapturePotential(state, side);
     passedPawns = evaluatePassedPawns(state, side);
+    pawnStructure = evaluatePawnStructure(state, side);
 
 score = material
       + mobility
@@ -571,6 +678,7 @@ score = material
       + kingEscape
       + anteaterCapturePotential
       + passedPawns
+      + pawnStructure
       + ((pstScore * g_pstScalePercent) / 100);
 
     learned =
@@ -583,7 +691,8 @@ score = material
     EVAL_WEIGHT_HANGING_PIECES * hangingPieces +
     EVAL_WEIGHT_KING_ESCAPE * kingEscape +
     EVAL_WEIGHT_ANTEATER_CAPTURE_POTENTIAL * anteaterCapturePotential +
-    EVAL_WEIGHT_PASSED_PAWNS * passedPawns;
+    EVAL_WEIGHT_PASSED_PAWNS * passedPawns +
+    EVAL_WEIGHT_PAWN_STRUCTURE * pawnStructure;
 
 return score + (int)(EVAL_RESIDUAL_SCALE * learned);
 }

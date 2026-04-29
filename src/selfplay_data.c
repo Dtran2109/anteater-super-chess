@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 #include "types.h"
 #include "moves.h"
 #include "board.h"
@@ -17,6 +18,9 @@
 #define ADJUDICATION_DRAW_MARGIN 100
 #define DEFAULT_GAMES 25
 #define DEFAULT_MAX_PLIES 200
+#define DEFAULT_SELFPLAY_SEARCH_DEPTH 10
+#define DEFAULT_SELFPLAY_TIME_MS 1000
+#define DEFAULT_SELFPLAY_PRESET "fast"
 #define EXPLORATION_PERCENT 30
 #define RECENT_HISTORY_LIMIT 256
 #define REPEAT_POSITION_PENALTY 50000
@@ -27,6 +31,11 @@ typedef struct {
     Move move;
     int score;
 } MoveCandidate;
+
+static int selfplaySearchDepth = DEFAULT_SELFPLAY_SEARCH_DEPTH;
+static int selfplayTimeMs = DEFAULT_SELFPLAY_TIME_MS;
+static const char *selfplayPreset = DEFAULT_SELFPLAY_PRESET;
+static int lastTrainingMoveScore = 0;
 
 static void safeAddMoveLocal(MoveList *list, Move move)
 {
@@ -189,6 +198,33 @@ static void addCandidateSorted(MoveCandidate *top, int *topCount, int topLimit, 
         break;
     }
 }
+
+static int trainingMoveIsUseful(const GameState *state,
+                                Move move,
+                                Move previousMove,
+                                const unsigned long long *positionHistory,
+                                int historyCount)
+{
+    GameState copy;
+    unsigned long long nextHash;
+
+    if (!moveLooksInsideBoard(move) || !isMoveLegal(state, move))
+    {
+        return 0;
+    }
+
+    if (!moveIsInvalid(previousMove) && movesAreReverse(previousMove, move))
+    {
+        return 0;
+    }
+
+    copy = *state;
+    applyMove(&copy, move);
+    nextHash = hashGameState(&copy);
+
+    return countHashInHistory(positionHistory, historyCount, nextHash) == 0;
+}
+
 static int materialOfSide(const GameState *state, PieceColor side)
 {
     int row, col;
@@ -267,6 +303,7 @@ static Move chooseTrainingMove(const GameState *state,
 
     if (safeMoves.count <= 0)
     {
+        lastTrainingMoveScore = evaluatePosition(state, side);
         return makeInvalidMoveLocal();
     }
 
@@ -284,6 +321,7 @@ static Move chooseTrainingMove(const GameState *state,
             if (isMoveLegal(state, candidate) &&
                 (moveIsInvalid(previousMove) || !movesAreReverse(previousMove, candidate)))
             {
+                lastTrainingMoveScore = evaluatePosition(state, side);
                 return candidate;
             }
         }
@@ -294,21 +332,40 @@ static Move chooseTrainingMove(const GameState *state,
 
             if (isMoveLegal(state, candidate))
             {
+                lastTrainingMoveScore = evaluatePosition(state, side);
                 return candidate;
             }
         }
 
+        lastTrainingMoveScore = evaluatePosition(state, side);
         return makeInvalidMoveLocal();
     }
 
+    {
+        Move searchMove = chooseBestMoveDepth(state, side, selfplaySearchDepth);
+        CpuSearchStats stats;
+
+        getLastCpuSearchStats(&stats);
+
+        if (trainingMoveIsUseful(state,
+                                 searchMove,
+                                 previousMove,
+                                 positionHistory,
+                                 historyCount))
+        {
+            lastTrainingMoveScore = stats.score;
+            return searchMove;
+        }
+    }
+
     /*
-        Score only verified legal moves.
+        Score only verified legal moves as a fallback when the search move would
+        make self-play data less useful, for example by repeating immediately.
     */
     for (i = 0; i < safeMoves.count; i++)
     {
         GameState copy = *state;
         Move move = safeMoves.moves[i];
-        ChessPiece target;
         unsigned long long nextHash;
         int repeatCount;
         int score;
@@ -356,10 +413,13 @@ if (move.promotionGoal != EMPTY)
 
         for (tries = 0; tries < 8; tries++)
         {
-            Move candidate = top[rand() % topCount].move;
+            int index = rand() % topCount;
+            Move candidate = top[index].move;
+            int candidateScore = top[index].score;
 
             if (isMoveLegal(state, candidate))
             {
+                lastTrainingMoveScore = candidateScore;
                 return candidate;
             }
         }
@@ -367,9 +427,11 @@ if (move.promotionGoal != EMPTY)
 
     if (isMoveLegal(state, top[0].move))
     {
+        lastTrainingMoveScore = top[0].score;
         return top[0].move;
     }
 
+    lastTrainingMoveScore = evaluatePosition(state, side);
     return makeInvalidMoveLocal();
 }
 static int countNonKingPieces(const GameState *state, PieceColor side)
@@ -399,17 +461,37 @@ int main(int argc, char **argv) {
     const char *outputPath = "training_data.csv";
     int games = DEFAULT_GAMES;
     int maxPlies = DEFAULT_MAX_PLIES;
+    int gameIdStart = 1;
+    int ttMb = 0;
+    unsigned int randomSeed;
     FILE *out;
-    int gameId;
+    int gameIndex;
 
     if (argc >= 2) outputPath = argv[1];
     if (argc >= 3) games = atoi(argv[2]);
     if (argc >= 4) maxPlies = atoi(argv[3]);
+    if (argc >= 5) selfplaySearchDepth = atoi(argv[4]);
+    if (argc >= 6) selfplayTimeMs = atoi(argv[5]);
+    if (argc >= 7) selfplayPreset = argv[6];
+    randomSeed = (unsigned int)time(NULL) ^ ((unsigned int)getpid() * 2654435761u);
+    if (argc >= 8) randomSeed = (unsigned int)strtoul(argv[7], NULL, 10);
+    if (argc >= 9) gameIdStart = atoi(argv[8]);
+    if (argc >= 10) ttMb = atoi(argv[9]);
 
     if (games <= 0) games = DEFAULT_GAMES;
     if (maxPlies <= 0 || maxPlies > MAX_GAME_MOVES) maxPlies = DEFAULT_MAX_PLIES;
+    if (gameIdStart <= 0) gameIdStart = 1;
+    if (selfplaySearchDepth <= 0) selfplaySearchDepth = DEFAULT_SELFPLAY_SEARCH_DEPTH;
+    if (selfplayTimeMs <= 0) selfplayTimeMs = DEFAULT_SELFPLAY_TIME_MS;
 
-    srand((unsigned int)time(NULL));
+    setCpuSearchTimeLimitMs(selfplayTimeMs);
+    setCpuSearchPreset(selfplayPreset);
+    if (ttMb > 0 && setCpuTranspositionTableSizeMb(ttMb) == 0u)
+    {
+        fprintf(stderr, "Warning: could not allocate %d MB transposition table.\n", ttMb);
+    }
+
+    srand(randomSeed);
 
     out = fopen(outputPath, "w");
     if (out == NULL) {
@@ -419,9 +501,21 @@ int main(int argc, char **argv) {
 
     writeTrainingCsvHeader(out);
 
-    freopen("/dev/null", "w", stdout);
+    fprintf(stderr,
+            "Self-play search: depth=%d time=%d ms preset=%s exploration=%d%%\n",
+            selfplaySearchDepth,
+            selfplayTimeMs,
+            getCpuSearchPresetName(),
+            EXPLORATION_PERCENT);
+    fprintf(stderr, "Self-play seed: %u\n", randomSeed);
+    fprintf(stderr, "Self-play TT: %lu MB\n", getCpuTranspositionTableSizeMb());
 
-    for (gameId = 1; gameId <= games; gameId++) {
+    if (freopen("/dev/null", "w", stdout) == NULL)
+    {
+        fprintf(stderr, "Warning: could not silence stdout during self-play.\n");
+    }
+
+    for (gameIndex = 0; gameIndex < games; gameIndex++) {
         GameState state;
         TrainingSample samples[MAX_GAME_MOVES];
         unsigned long long positionHistory[RECENT_HISTORY_LIMIT];
@@ -431,6 +525,7 @@ int main(int argc, char **argv) {
         PieceColor winner = NONE;
         int endedByTerminal = 0;
         int endedByRepetition = 0;
+        int gameId = gameIdStart + gameIndex;
         Move previousMove = makeInvalidMoveLocal();
 
         initTrainingGameState(&state);
@@ -506,7 +601,7 @@ if (!isMoveLegal(&state, chosenMove)) {
             samples[sampleCount].stateBefore = state;
             samples[sampleCount].sideToMove = side;
             samples[sampleCount].chosenMove = chosenMove;
-            samples[sampleCount].searchScore = evaluatePosition(&state, side);
+            samples[sampleCount].searchScore = lastTrainingMoveScore;
             sampleCount++;
 
             applyMove(&state, chosenMove);
@@ -561,7 +656,7 @@ if (winner == NONE) {
         }
 
         fprintf(stderr, "Game %d/%d complete: %d samples, winner=%s%s%s\n",
-                gameId,
+                gameIndex + 1,
                 games,
                 sampleCount,
                 sideToString(winner),

@@ -964,7 +964,14 @@ void generateAllLegalMoves(const GameState *state, PieceColor side, MoveList *li
 
     for (i = 0; i < pseudo.count; i++)
     {
-        if (isMoveLegal(&temp, pseudo.moves[i]))
+        ChessPiece moving = getPieceAt(&temp, pseudo.moves[i].start);
+        int isCastleAttempt = moving.type == KING &&
+                              pseudo.moves[i].start.row == pseudo.moves[i].dest.row &&
+                              (pseudo.moves[i].dest.col - pseudo.moves[i].start.col == 2 ||
+                               pseudo.moves[i].dest.col - pseudo.moves[i].start.col == -2);
+
+        if ((isCastleAttempt && isMoveLegal(&temp, pseudo.moves[i])) ||
+            (!isCastleAttempt && isMoveLegalFast(&temp, pseudo.moves[i], side)))
         {
             addMove(list,
                     pseudo.moves[i].start,

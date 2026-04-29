@@ -1,4 +1,5 @@
 #include "board.h"
+#include "cpu.h"
 #include "game.h"
 #include "moves.h"
 #include <assert.h>
@@ -79,12 +80,23 @@ static void test_en_passant_and_promotion_basics(void) {
     assert(s.squares[0][0].type == QUEEN);
 }
 
+static void test_cpu_depth_ten_returns_legal_move(void) {
+    GameState s;
+    Move m;
+
+    onlyKingsAndAnteater(&s);
+    m = chooseBestMoveDepth(&s, WHITE, 10);
+    assert(m.start.row >= 0);
+    assert(isMoveLegal(&s, m));
+}
+
 int main(void) {
     test_initial_board();
     test_anteater_does_not_attack_king();
     test_anteater_cannot_capture_piece();
     test_anteater_multi_capture();
     test_en_passant_and_promotion_basics();
+    test_cpu_depth_ten_returns_legal_move();
     puts("All rule tests passed.");
     return 0;
 }

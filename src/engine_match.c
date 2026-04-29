@@ -11,6 +11,9 @@
 
 #define MAX_MATCH_PLIES 160
 #define DEFAULT_RANDOM_OPENING_PLIES 6
+#define DEFAULT_ENGINE_MATCH_CPU_DEPTH 10
+#define DEFAULT_ENGINE_MATCH_TIME_MS 1000
+#define DEFAULT_ENGINE_MATCH_PRESET "fast"
 
 #define MATCH_HISTORY_LIMIT 512
 #define REPETITION_LIMIT 3
@@ -19,6 +22,10 @@
 #define IMMEDIATE_UNDO_PENALTY 500
 #define CAPTURE_PROGRESS_BONUS 50
 #define PAWN_PROGRESS_BONUS 15
+
+static int engineMatchCpuDepth = DEFAULT_ENGINE_MATCH_CPU_DEPTH;
+static int engineMatchTimeMs = DEFAULT_ENGINE_MATCH_TIME_MS;
+static const char *engineMatchPreset = DEFAULT_ENGINE_MATCH_PRESET;
 
 typedef enum
 {
@@ -491,7 +498,33 @@ static Move chooseSafeMove(const GameState *state,
     }
 
     /* First try the real CPU search move. */
-    candidate = chooseBestMove(state, side);
+    candidate = chooseBestMoveDepth(state, side, engineMatchCpuDepth);
+    {
+        CpuSearchStats stats;
+        char candidateString[16];
+
+        getLastCpuSearchStats(&stats);
+        moveToStringLocal(stats.bestMove, candidateString, sizeof(candidateString));
+
+        printf("CPU depth=%d/%d side=%s move=%s score=%d "
+               "nodes=%lu total_nodes=%llu time=%.2f ms avg=%.2f ms "
+               "nps=%lu tt_hits=%lu tt_cutoffs=%lu "
+               "total_tt_hits=%llu total_tt_cutoffs=%llu\n",
+               stats.completedDepth,
+               stats.requestedDepth,
+               sideName(stats.side),
+               candidateString,
+               stats.score,
+               stats.nodes,
+               stats.totalNodes,
+               stats.timeMs,
+               stats.averageTimeMs,
+               stats.nps,
+               stats.ttHits,
+               stats.ttCutoffs,
+               stats.totalTtHits,
+               stats.totalTtCutoffs);
+    }
 
     if (candidate.start.row >= 0 && isMoveLegal(state, candidate))
     {
@@ -607,6 +640,9 @@ static MatchResult playOneGame(const char *matchupName,
         int evalAfterPst50;
         int evalAfterPst100;
         int usedRandomOpening;
+        CpuSearchStats searchStats;
+
+        memset(&searchStats, 0, sizeof(searchStats));
 
         if (isKingDead(&state, WHITE))
         {
@@ -646,6 +682,11 @@ static MatchResult playOneGame(const char *matchupName,
                               previousMove,
                               positionHistory,
                               historyCount);
+
+        if (!usedRandomOpening)
+        {
+            getLastCpuSearchStats(&searchStats);
+        }
 
         moveToStringLocal(move, moveString, sizeof(moveString));
 
@@ -706,7 +747,7 @@ static MatchResult playOneGame(const char *matchupName,
         if (moveLog != NULL)
         {
             fprintf(moveLog,
-                    "%s,%d,%d,%s,%s,%d,%s,%d,%s,%d,%d,%d,%d,%d,%d,%s,%s\n",
+                    "%s,%d,%d,%s,%s,%d,%s,%d,%d,%d,%lu,%llu,%.2f,%.2f,%lu,%lu,%lu,%llu,%llu,%s,%d,%d,%d,%d,%d,%d,%s,%s\n",
                     matchupName,
                     matchupGameId,
                     ply,
@@ -715,6 +756,17 @@ static MatchResult playOneGame(const char *matchupName,
                     pstScale,
                     moveString,
                     usedRandomOpening,
+                    searchStats.completedDepth,
+                    searchStats.requestedDepth,
+                    searchStats.nodes,
+                    searchStats.totalNodes,
+                    searchStats.timeMs,
+                    searchStats.averageTimeMs,
+                    searchStats.nps,
+                    searchStats.ttHits,
+                    searchStats.ttCutoffs,
+                    searchStats.totalTtHits,
+                    searchStats.totalTtCutoffs,
                     boardBefore,
                     evalBeforePst0,
                     evalBeforePst50,
@@ -724,6 +776,7 @@ static MatchResult playOneGame(const char *matchupName,
                     evalAfterPst100,
                     boardAfter,
                     sideName(state.currentTurn));
+            fflush(moveLog);
         }
     }
 
@@ -843,6 +896,7 @@ static void runMatch(const char *matchupName,
                     result.finalEvalPst0,
                     result.finalEvalPst50,
                     result.finalEvalPst100);
+            fflush(gameLog);
         }
     }
 
@@ -872,6 +926,7 @@ static void runMatch(const char *matchupName,
             fprintf(summaryLog, "  %s score: %.1f / %d\n", nameA, aScore, games);
             fprintf(summaryLog, "  %s score: %.1f / %d\n", nameB, bScore, games);
             fprintf(summaryLog, "  Average plies: %.2f\n\n", avgPlies);
+            fflush(summaryLog);
         }
     }
 }
@@ -880,6 +935,7 @@ int main(int argc, char **argv)
 {
     int games = 100;
     int randomOpeningPlies = DEFAULT_RANDOM_OPENING_PLIES;
+    int ttMb = 0;
     const char *outputPrefix = "engine_match";
 
     char gameLogPath[256];
@@ -905,6 +961,26 @@ int main(int argc, char **argv)
         outputPrefix = argv[3];
     }
 
+    if (argc >= 5)
+    {
+        engineMatchCpuDepth = atoi(argv[4]);
+    }
+
+    if (argc >= 6)
+    {
+        engineMatchTimeMs = atoi(argv[5]);
+    }
+
+    if (argc >= 7)
+    {
+        engineMatchPreset = argv[6];
+    }
+
+    if (argc >= 8)
+    {
+        ttMb = atoi(argv[7]);
+    }
+
     snprintf(gameLogPath, sizeof(gameLogPath), "%s_games.csv", outputPrefix);
     snprintf(moveLogPath, sizeof(moveLogPath), "%s_moves.csv", outputPrefix);
     snprintf(summaryLogPath, sizeof(summaryLogPath), "%s_summary.txt", outputPrefix);
@@ -917,6 +993,23 @@ int main(int argc, char **argv)
     if (randomOpeningPlies < 0)
     {
         randomOpeningPlies = 0;
+    }
+
+    if (engineMatchCpuDepth <= 0)
+    {
+        engineMatchCpuDepth = DEFAULT_ENGINE_MATCH_CPU_DEPTH;
+    }
+
+    if (engineMatchTimeMs <= 0)
+    {
+        engineMatchTimeMs = DEFAULT_ENGINE_MATCH_TIME_MS;
+    }
+
+    setCpuSearchTimeLimitMs(engineMatchTimeMs);
+    setCpuSearchPreset(engineMatchPreset);
+    if (ttMb > 0 && setCpuTranspositionTableSizeMb(ttMb) == 0u)
+    {
+        fprintf(stderr, "Warning: could not allocate %d MB transposition table.\n", ttMb);
     }
 
     srand((unsigned int)(time(NULL) ^ getpid()));
@@ -940,18 +1033,30 @@ int main(int argc, char **argv)
             "matchup,game_id,white_engine,black_engine,pst_white,pst_black,winner,plies,end_reason,final_eval_pst0,final_eval_pst50,final_eval_pst100\n");
 
     fprintf(moveLog,
-            "matchup,game_id,ply,side_to_move,engine,pst_scale,move,random_opening,board_before,eval_before_pst0,eval_before_pst50,eval_before_pst100,eval_after_pst0,eval_after_pst50,eval_after_pst100,board_after,next_turn\n");
+            "matchup,game_id,ply,side_to_move,engine,pst_scale,move,random_opening,search_depth,search_requested_depth,search_nodes,search_total_nodes,search_time_ms,search_avg_time_ms,search_nps,search_tt_hits,search_tt_cutoffs,search_total_tt_hits,search_total_tt_cutoffs,board_before,eval_before_pst0,eval_before_pst50,eval_before_pst100,eval_after_pst0,eval_after_pst50,eval_after_pst100,board_after,next_turn\n");
+
+    fflush(gameLog);
+    fflush(moveLog);
 
     printf("===== ENGINE MATCH TEST =====\n");
     printf("Games per matchup: %d\n", games);
     printf("Random opening plies: %d\n", randomOpeningPlies);
+    printf("CPU search depth: %d\n", engineMatchCpuDepth);
+    printf("CPU time limit: %d ms\n", engineMatchTimeMs);
+    printf("CPU preset: %s\n", getCpuSearchPresetName());
+    printf("CPU TT: %lu MB\n", getCpuTranspositionTableSizeMb());
     printf("Game log: %s\n", gameLogPath);
     printf("Move log: %s\n", moveLogPath);
     printf("Summary log: %s\n\n", summaryLogPath);
 
     fprintf(summaryLog, "===== ENGINE MATCH TEST =====\n");
     fprintf(summaryLog, "Games per matchup: %d\n", games);
-    fprintf(summaryLog, "Random opening plies: %d\n\n", randomOpeningPlies);
+    fprintf(summaryLog, "Random opening plies: %d\n", randomOpeningPlies);
+    fprintf(summaryLog, "CPU search depth: %d\n", engineMatchCpuDepth);
+    fprintf(summaryLog, "CPU time limit: %d ms\n", engineMatchTimeMs);
+    fprintf(summaryLog, "CPU preset: %s\n", getCpuSearchPresetName());
+    fprintf(summaryLog, "CPU TT: %lu MB\n\n", getCpuTranspositionTableSizeMb());
+    fflush(summaryLog);
 
     runMatch("No_PST_vs_PST_Half",
              "No PST", 0,

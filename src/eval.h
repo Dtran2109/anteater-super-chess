@@ -46,6 +46,10 @@ int evaluateAnteaterCapturePotential(const GameState *state, PieceColor side);
 int evaluatePassedPawns(const GameState *state, PieceColor side);
 
 //precondition: Take in the game state and side color
+//postcondition: Return the pawn structure score for that side
+int evaluatePawnStructure(const GameState *state, PieceColor side);
+
+//precondition: Take in the game state and side color
 //postcondition: Return the piece square table score for that side
 int evaluatePieceSquareTables(const GameState *state, PieceColor side);
 

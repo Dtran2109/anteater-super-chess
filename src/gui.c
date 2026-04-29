@@ -2,6 +2,7 @@
 #include "board.h"
 #include "game.h"
 #include "cpu.h"
+#include "moves.h"
 #include <SDL2/SDL_image.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -436,14 +437,14 @@ int runGuiGame(GameState *state, GameMode mode, PieceColor playerColor) {
             int allowCpuMove = (mode == C_VS_C_MODE) ? cpuStepRequested : 1;
 
             if (allowCpuMove) {
-                int depth = (mode == C_VS_C_MODE) ? 3 : 4;
+                int depth = (mode == C_VS_C_MODE) ? 4 : 10;
                 Move m;
 
                 cpuStepRequested = 0;
                 selectedRow = selectedCol = -1;
                 clearMoveList(&selectedMoves);
 
-                m = chooseBestMove(state, state->currentTurn);
+                m = chooseBestMoveDepth(state, state->currentTurn, depth);
 
                 if (m.start.row >= 0) {
                     applyMove(state, m);
