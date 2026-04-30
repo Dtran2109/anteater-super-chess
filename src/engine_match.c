@@ -14,6 +14,11 @@
 #define DEFAULT_ENGINE_MATCH_CPU_DEPTH 10
 #define DEFAULT_ENGINE_MATCH_TIME_MS 1000
 #define DEFAULT_ENGINE_MATCH_PRESET "fast"
+#define RAW_MATERIAL_ENGINE_NAME "RawDepth4AlphaBeta"
+#define RAW_MATERIAL_DEPTH 4
+#define RAW_MATERIAL_WIN_SCORE 1000000
+#define RAW_MATERIAL_LOSS_SCORE -1000000
+#define RAW_MATERIAL_INF 2000000000
 
 #define MATCH_HISTORY_LIMIT 512
 #define REPETITION_LIMIT 3
@@ -26,6 +31,12 @@
 static int engineMatchCpuDepth = DEFAULT_ENGINE_MATCH_CPU_DEPTH;
 static int engineMatchTimeMs = DEFAULT_ENGINE_MATCH_TIME_MS;
 static const char *engineMatchPreset = DEFAULT_ENGINE_MATCH_PRESET;
+static const char *engineMatchSuite = "all";
+static int currentEnginePstScale = 0;
+static int currentEngineLearnedEval = 0;
+static CpuSearchStats lastRawMaterialStats;
+static unsigned long long totalRawMaterialNodes = 0ULL;
+static unsigned long long totalRawMaterialSearches = 0ULL;
 
 typedef enum
 {
@@ -83,6 +94,7 @@ static MatchResult makeResult(const GameState *state,
                               EndReason reason);
 
 static Move chooseSafeMove(const GameState *state,
+                           const char *engineName,
                            PieceColor side,
                            int useRandom,
                            Move previousMove,
@@ -108,6 +120,21 @@ static void runMatch(const char *matchupName,
                      FILE *gameLog,
                      FILE *moveLog,
                      FILE *summaryLog);
+
+static int engineIsRawMaterial(const char *engineName);
+static int rawAbsInt(int value);
+static int rawPieceValue(PieceType type);
+static int rawPositionalBonus(int row, int col, ChessPiece piece);
+static int rawMaterialEvaluate(const GameState *state, PieceColor side);
+static int rawMoveOrderScore(const GameState *state, Move move);
+static void rawSortMoves(const GameState *state, MoveList *list);
+static int rawMaterialAlphaBeta(GameState *state,
+                                int depth,
+                                int alpha,
+                                int beta,
+                                PieceColor cpuSide,
+                                int plyFromRoot);
+static Move chooseRawMaterialMove(const GameState *state, PieceColor side);
 
 /* ---------- Small helpers ---------- */
 
@@ -218,6 +245,367 @@ static int actualCaptureGainFromMoveLocal(const GameState *state, Move move, Pie
     after = materialOfSideLocal(&copy, enemy);
 
     return before - after;
+}
+
+static int engineIsRawMaterial(const char *engineName)
+{
+    return engineName != NULL && strcmp(engineName, RAW_MATERIAL_ENGINE_NAME) == 0;
+}
+
+static int rawAbsInt(int value)
+{
+    return value < 0 ? -value : value;
+}
+
+static int rawPieceValue(PieceType type)
+{
+    switch (type)
+    {
+        case PAWN:     return 100;
+        case KNIGHT:   return 320;
+        case BISHOP:   return 330;
+        case ANTEATER: return 430;
+        case ROOK:     return 500;
+        case QUEEN:    return 900;
+        case KING:     return 20000;
+        case EMPTY:
+        default:       return 0;
+    }
+}
+
+static int rawPositionalBonus(int row, int col, ChessPiece piece)
+{
+    int score = 0;
+    int centerRowDistance = rawAbsInt(row - (BOARD_ROWS / 2));
+    int centerColDistance = rawAbsInt(col - (BOARD_COLS / 2));
+    int centerBonus = 12 - (centerRowDistance + centerColDistance);
+
+    if (centerBonus < 0)
+    {
+        centerBonus = 0;
+    }
+
+    switch (piece.type)
+    {
+        case PAWN:
+        {
+            int advance = (piece.color == WHITE) ? (6 - row) : (row - 1);
+
+            if (advance < 0)
+            {
+                advance = 0;
+            }
+
+            score += advance * 8;
+            break;
+        }
+
+        case KNIGHT:
+        case BISHOP:
+        case ANTEATER:
+            score += centerBonus * 4;
+            break;
+
+        case ROOK:
+            score += centerBonus;
+            break;
+
+        case QUEEN:
+            score += centerBonus * 2;
+            break;
+
+        case KING:
+            score -= centerBonus * 2;
+            break;
+
+        default:
+            break;
+    }
+
+    return score;
+}
+
+static int rawMaterialEvaluate(const GameState *state, PieceColor side)
+{
+    int row;
+    int col;
+    int score = 0;
+    PieceColor enemy = oppositeColorLocal(side);
+
+    if (isKingDead(state, enemy))
+    {
+        return RAW_MATERIAL_WIN_SCORE;
+    }
+
+    if (isKingDead(state, side))
+    {
+        return RAW_MATERIAL_LOSS_SCORE;
+    }
+
+    for (row = 0; row < BOARD_ROWS; row++)
+    {
+        for (col = 0; col < BOARD_COLS; col++)
+        {
+            ChessPiece piece = state->squares[row][col];
+
+            if (piece.type == EMPTY)
+            {
+                continue;
+            }
+
+            int value = rawPieceValue(piece.type) + rawPositionalBonus(row, col, piece);
+
+            if (piece.color == side)
+            {
+                score += value;
+            }
+            else
+            {
+                score -= value;
+            }
+        }
+    }
+
+    return score;
+}
+
+static int rawMoveOrderScore(const GameState *state, Move move)
+{
+    ChessPiece attacker;
+    ChessPiece victim;
+    int score = 0;
+
+    if (move.start.row < 0 || move.start.col < 0 ||
+        move.dest.row < 0 || move.dest.col < 0)
+    {
+        return score;
+    }
+
+    attacker = state->squares[move.start.row][move.start.col];
+    victim = state->squares[move.dest.row][move.dest.col];
+
+    if (victim.type != EMPTY)
+    {
+        score += 10 * rawPieceValue(victim.type) - rawPieceValue(attacker.type);
+    }
+
+    if (move.promotionGoal != EMPTY)
+    {
+        score += rawPieceValue(move.promotionGoal);
+    }
+
+    if (attacker.type == ANTEATER && victim.type == PAWN)
+    {
+        score += 250;
+    }
+
+    return score;
+}
+
+static void rawSortMoves(const GameState *state, MoveList *list)
+{
+    int i;
+
+    for (i = 1; i < list->count; i++)
+    {
+        Move key = list->moves[i];
+        int keyScore = rawMoveOrderScore(state, key);
+        int j = i - 1;
+
+        while (j >= 0 && rawMoveOrderScore(state, list->moves[j]) < keyScore)
+        {
+            list->moves[j + 1] = list->moves[j];
+            j--;
+        }
+
+        list->moves[j + 1] = key;
+    }
+}
+
+static int rawMaterialAlphaBeta(GameState *state,
+                                int depth,
+                                int alpha,
+                                int beta,
+                                PieceColor cpuSide,
+                                int plyFromRoot)
+{
+    MoveList legal;
+    PieceColor sideToMove = state->currentTurn;
+    int i;
+
+    lastRawMaterialStats.nodes++;
+
+    if (isKingDead(state, cpuSide))
+    {
+        return RAW_MATERIAL_LOSS_SCORE + plyFromRoot;
+    }
+
+    if (isKingDead(state, oppositeColorLocal(cpuSide)))
+    {
+        return RAW_MATERIAL_WIN_SCORE - plyFromRoot;
+    }
+
+    generateAllLegalMoves(state, sideToMove, &legal);
+
+    if (legal.count == 0)
+    {
+        if (isKingInCheck(state, sideToMove))
+        {
+            if (sideToMove == cpuSide)
+            {
+                return RAW_MATERIAL_LOSS_SCORE + plyFromRoot;
+            }
+
+            return RAW_MATERIAL_WIN_SCORE - plyFromRoot;
+        }
+
+        return 0;
+    }
+
+    if (depth <= 0)
+    {
+        return rawMaterialEvaluate(state, cpuSide);
+    }
+
+    rawSortMoves(state, &legal);
+
+    if (sideToMove == cpuSide)
+    {
+        int best = -RAW_MATERIAL_INF;
+
+        for (i = 0; i < legal.count; i++)
+        {
+            MoveRecord record;
+            int score;
+
+            applyMoveRecord(state, legal.moves[i], &record);
+            score = rawMaterialAlphaBeta(state, depth - 1, alpha, beta, cpuSide, plyFromRoot + 1);
+            undoMove(state, &record);
+
+            if (score > best)
+            {
+                best = score;
+            }
+
+            if (score > alpha)
+            {
+                alpha = score;
+            }
+
+            if (alpha >= beta)
+            {
+                break;
+            }
+        }
+
+        return best;
+    }
+
+    {
+        int best = RAW_MATERIAL_INF;
+
+        for (i = 0; i < legal.count; i++)
+        {
+            MoveRecord record;
+            int score;
+
+            applyMoveRecord(state, legal.moves[i], &record);
+            score = rawMaterialAlphaBeta(state, depth - 1, alpha, beta, cpuSide, plyFromRoot + 1);
+            undoMove(state, &record);
+
+            if (score < best)
+            {
+                best = score;
+            }
+
+            if (score < beta)
+            {
+                beta = score;
+            }
+
+            if (alpha >= beta)
+            {
+                break;
+            }
+        }
+
+        return best;
+    }
+}
+
+static Move chooseRawMaterialMove(const GameState *state, PieceColor side)
+{
+    GameState root;
+    MoveList legal;
+    Move bestMove;
+    int bestScore = -RAW_MATERIAL_INF;
+    int i;
+    clock_t startClock;
+    clock_t endClock;
+    double timeMs;
+
+    memset(&lastRawMaterialStats, 0, sizeof(lastRawMaterialStats));
+    lastRawMaterialStats.side = side;
+    lastRawMaterialStats.requestedDepth = RAW_MATERIAL_DEPTH;
+    lastRawMaterialStats.completedDepth = RAW_MATERIAL_DEPTH;
+
+    if (state == NULL)
+    {
+        return makeInvalidMoveLocal();
+    }
+
+    root = *state;
+    root.currentTurn = side;
+
+    generateAllLegalMoves(&root, side, &legal);
+    if (legal.count <= 0)
+    {
+        return makeInvalidMoveLocal();
+    }
+
+    rawSortMoves(&root, &legal);
+    bestMove = legal.moves[0];
+    startClock = clock();
+
+    for (i = 0; i < legal.count; i++)
+    {
+        MoveRecord record;
+        int score;
+
+        applyMoveRecord(&root, legal.moves[i], &record);
+        score = rawMaterialAlphaBeta(&root,
+                                     RAW_MATERIAL_DEPTH - 1,
+                                     -RAW_MATERIAL_INF,
+                                     RAW_MATERIAL_INF,
+                                     side,
+                                     1);
+        undoMove(&root, &record);
+
+        if (score > bestScore)
+        {
+            bestScore = score;
+            bestMove = legal.moves[i];
+        }
+    }
+
+    endClock = clock();
+    timeMs = ((double)(endClock - startClock) * 1000.0) / (double)CLOCKS_PER_SEC;
+
+    totalRawMaterialSearches++;
+    totalRawMaterialNodes += lastRawMaterialStats.nodes;
+
+    lastRawMaterialStats.bestMove = bestMove;
+    lastRawMaterialStats.score = bestScore;
+    lastRawMaterialStats.totalNodes = totalRawMaterialNodes;
+    lastRawMaterialStats.timeMs = timeMs;
+    lastRawMaterialStats.averageTimeMs = timeMs;
+    lastRawMaterialStats.nps = (timeMs > 0.0)
+        ? (unsigned long)((double)lastRawMaterialStats.nodes * 1000.0 / timeMs)
+        : 0u;
+
+    (void)totalRawMaterialSearches;
+
+    return bestMove;
 }
 
 /*
@@ -460,6 +848,7 @@ static MatchResult makeResult(const GameState *state,
       legal move scorer with repetition/progress penalties.
 */
 static Move chooseSafeMove(const GameState *state,
+                           const char *engineName,
                            PieceColor side,
                            int useRandom,
                            Move previousMove,
@@ -497,12 +886,33 @@ static Move chooseSafeMove(const GameState *state,
         return safeMoves.moves[rand() % safeMoves.count];
     }
 
-    /* First try the real CPU search move. */
-    candidate = chooseBestMoveDepth(state, side, engineMatchCpuDepth);
+    if (engineIsRawMaterial(engineName))
     {
         CpuSearchStats stats;
         char candidateString[16];
 
+        candidate = chooseRawMaterialMove(state, side);
+        stats = lastRawMaterialStats;
+        moveToStringLocal(stats.bestMove, candidateString, sizeof(candidateString));
+
+        printf("RAW depth=%d/%d side=%s move=%s score=%d "
+               "nodes=%lu total_nodes=%llu time=%.2f ms nps=%lu\n",
+               stats.completedDepth,
+               stats.requestedDepth,
+               sideName(stats.side),
+               candidateString,
+               stats.score,
+               stats.nodes,
+               stats.totalNodes,
+               stats.timeMs,
+               stats.nps);
+    }
+    else
+    {
+        CpuSearchStats stats;
+        char candidateString[16];
+
+        candidate = chooseBestMoveDepth(state, side, engineMatchCpuDepth);
         getLastCpuSearchStats(&stats);
         moveToStringLocal(stats.bestMove, candidateString, sizeof(candidateString));
 
@@ -524,6 +934,13 @@ static Move chooseSafeMove(const GameState *state,
                stats.ttCutoffs,
                stats.totalTtHits,
                stats.totalTtCutoffs);
+    }
+
+    if (engineIsRawMaterial(engineName) &&
+        candidate.start.row >= 0 &&
+        isMoveLegal(state, candidate))
+    {
+        return candidate;
     }
 
     if (candidate.start.row >= 0 && isMoveLegal(state, candidate))
@@ -668,6 +1085,7 @@ static MatchResult playOneGame(const char *matchupName,
         }
 
         serializeBoardLocal(&state, boardBefore, sizeof(boardBefore));
+        setLearnedEvalEnabled(engineIsRawMaterial(engineName) ? 0 : currentEngineLearnedEval);
 
         evalBeforePst0 = evalWhiteWithPstScale(&state, 0);
         evalBeforePst50 = evalWhiteWithPstScale(&state, 50);
@@ -677,6 +1095,7 @@ static MatchResult playOneGame(const char *matchupName,
         usedRandomOpening = (ply < randomOpeningPlies);
 
         move = chooseSafeMove(&state,
+                              engineName,
                               side,
                               usedRandomOpening,
                               previousMove,
@@ -685,7 +1104,14 @@ static MatchResult playOneGame(const char *matchupName,
 
         if (!usedRandomOpening)
         {
-            getLastCpuSearchStats(&searchStats);
+            if (engineIsRawMaterial(engineName))
+            {
+                searchStats = lastRawMaterialStats;
+            }
+            else
+            {
+                getLastCpuSearchStats(&searchStats);
+            }
         }
 
         moveToStringLocal(move, moveString, sizeof(moveString));
@@ -936,6 +1362,7 @@ int main(int argc, char **argv)
     int games = 100;
     int randomOpeningPlies = DEFAULT_RANDOM_OPENING_PLIES;
     int ttMb = 0;
+    unsigned int randomSeed;
     const char *outputPrefix = "engine_match";
 
     char gameLogPath[256];
@@ -981,6 +1408,27 @@ int main(int argc, char **argv)
         ttMb = atoi(argv[7]);
     }
 
+    if (argc >= 9)
+    {
+        engineMatchSuite = argv[8];
+    }
+
+    if (argc >= 10)
+    {
+        currentEnginePstScale = atoi(argv[9]);
+    }
+
+    if (argc >= 11)
+    {
+        currentEngineLearnedEval = atoi(argv[10]) ? 1 : 0;
+    }
+
+    randomSeed = (unsigned int)(time(NULL) ^ getpid());
+    if (argc >= 12)
+    {
+        randomSeed = (unsigned int)strtoul(argv[11], NULL, 10);
+    }
+
     snprintf(gameLogPath, sizeof(gameLogPath), "%s_games.csv", outputPrefix);
     snprintf(moveLogPath, sizeof(moveLogPath), "%s_moves.csv", outputPrefix);
     snprintf(summaryLogPath, sizeof(summaryLogPath), "%s_summary.txt", outputPrefix);
@@ -1005,14 +1453,26 @@ int main(int argc, char **argv)
         engineMatchTimeMs = DEFAULT_ENGINE_MATCH_TIME_MS;
     }
 
+    if (currentEnginePstScale < 0)
+    {
+        currentEnginePstScale = 0;
+    }
+
+    if (currentEnginePstScale > 100)
+    {
+        currentEnginePstScale = 100;
+    }
+
     setCpuSearchTimeLimitMs(engineMatchTimeMs);
     setCpuSearchPreset(engineMatchPreset);
+    setPstScalePercent(currentEnginePstScale);
+    setLearnedEvalEnabled(currentEngineLearnedEval);
     if (ttMb > 0 && setCpuTranspositionTableSizeMb(ttMb) == 0u)
     {
         fprintf(stderr, "Warning: could not allocate %d MB transposition table.\n", ttMb);
     }
 
-    srand((unsigned int)(time(NULL) ^ getpid()));
+    srand(randomSeed);
 
     gameLog = fopen(gameLogPath, "w");
     moveLog = fopen(moveLogPath, "w");
@@ -1045,6 +1505,10 @@ int main(int argc, char **argv)
     printf("CPU time limit: %d ms\n", engineMatchTimeMs);
     printf("CPU preset: %s\n", getCpuSearchPresetName());
     printf("CPU TT: %lu MB\n", getCpuTranspositionTableSizeMb());
+    printf("Match suite: %s\n", engineMatchSuite);
+    printf("Current engine PST scale: %d%%\n", currentEnginePstScale);
+    printf("Current engine learned eval: %s\n", currentEngineLearnedEval ? "on" : "off");
+    printf("Random seed: %u\n", randomSeed);
     printf("Game log: %s\n", gameLogPath);
     printf("Move log: %s\n", moveLogPath);
     printf("Summary log: %s\n\n", summaryLogPath);
@@ -1055,65 +1519,52 @@ int main(int argc, char **argv)
     fprintf(summaryLog, "CPU search depth: %d\n", engineMatchCpuDepth);
     fprintf(summaryLog, "CPU time limit: %d ms\n", engineMatchTimeMs);
     fprintf(summaryLog, "CPU preset: %s\n", getCpuSearchPresetName());
-    fprintf(summaryLog, "CPU TT: %lu MB\n\n", getCpuTranspositionTableSizeMb());
+    fprintf(summaryLog, "CPU TT: %lu MB\n", getCpuTranspositionTableSizeMb());
+    fprintf(summaryLog, "Match suite: %s\n", engineMatchSuite);
+    fprintf(summaryLog, "Current engine PST scale: %d%%\n", currentEnginePstScale);
+    fprintf(summaryLog, "Current engine learned eval: %s\n", currentEngineLearnedEval ? "on" : "off");
+    fprintf(summaryLog, "Random seed: %u\n\n", randomSeed);
     fflush(summaryLog);
 
-    runMatch("No_PST_vs_PST_Half",
-             "No PST", 0,
-             "PST Half", 50,
+    runMatch("Current_vs_RawDepth4AlphaBeta",
+             "Current Engine", currentEnginePstScale,
+             RAW_MATERIAL_ENGINE_NAME, 0,
              games,
              randomOpeningPlies,
              gameLog,
              moveLog,
              summaryLog);
 
-    runMatch("No_PST_vs_PST_Full",
-             "No PST", 0,
-             "PST Full", 100,
-             games,
-             randomOpeningPlies,
-             gameLog,
-             moveLog,
-             summaryLog);
+    if (strcmp(engineMatchSuite, "raw") != 0)
+    {
+        runMatch("No_PST_vs_PST_Half",
+                 "No PST", 0,
+                 "PST Half", 50,
+                 games,
+                 randomOpeningPlies,
+                 gameLog,
+                 moveLog,
+                 summaryLog);
 
-    runMatch("PST_Half_vs_PST_Full",
-             "PST Half", 50,
-             "PST Full", 100,
-             games,
-             randomOpeningPlies,
-             gameLog,
-             moveLog,
-             summaryLog);
-    runMatch("No_PST_vs_No_PST",
-         "No PST A",
-         0,
-         "No PST B",
-         0,
-         games,
-         randomOpeningPlies,
-         gameLog,
-         moveLog,
-         summaryLog);
-    runMatch("PST_Half_vs_PST_Half",
-         "PST Half A",
-         50,
-         "PST Half B",
-         50,
-         games,
-         randomOpeningPlies,
-         gameLog,
-         moveLog,
-         summaryLog);
-runMatch("PST_Full_vs_PST_Full",
-         "PST Full A",
-         100,
-         "PST Full B",
-         100,
-         games,
-         randomOpeningPlies,
-         gameLog,
-         moveLog,
-         summaryLog);
+        runMatch("No_PST_vs_PST_Full",
+                 "No PST", 0,
+                 "PST Full", 100,
+                 games,
+                 randomOpeningPlies,
+                 gameLog,
+                 moveLog,
+                 summaryLog);
+
+        runMatch("PST_Half_vs_PST_Full",
+                 "PST Half", 50,
+                 "PST Full", 100,
+                 games,
+                 randomOpeningPlies,
+                 gameLog,
+                 moveLog,
+                 summaryLog);
+    }
+
     fclose(gameLog);
     fclose(moveLog);
     fclose(summaryLog);

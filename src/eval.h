@@ -63,4 +63,12 @@ void setPstScalePercent(int percent);
 //postcondition: Return the current piece square table scale percent
 int getPstScalePercent(void);
 
+//precondition: Take in a boolean-like integer
+//postcondition: Enable or disable learned residual evaluation
+void setLearnedEvalEnabled(int enabled);
+
+//precondition: None
+//postcondition: Return integer if learned residual evaluation is enabled
+int getLearnedEvalEnabled(void);
+
 #endif

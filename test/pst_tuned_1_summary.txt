@@ -1,0 +1,173 @@
+
+GAME RESULTS
+============
+
+Current_vs_RawDepth4AlphaBeta
+-----------------------------
+Games: 100
+Draws: 2
+White wins: 48
+Black wins: 50
+Average plies: 111.42
+Engine scores:
+  Current Engine: 32.0 / 100
+  RawDepth4AlphaBeta: 68.0 / 100
+End reasons:
+  CHECKMATE_OR_NO_MOVE: 83
+  MAX_PLIES_ADJUDICATION: 16
+  REPETITION: 1
+
+No_PST_vs_PST_Half
+------------------
+Games: 100
+Draws: 1
+White wins: 69
+Black wins: 30
+Average plies: 106.48
+Engine scores:
+  No PST: 52.5 / 100
+  PST Half: 47.5 / 100
+End reasons:
+  CHECKMATE_OR_NO_MOVE: 90
+  MAX_PLIES_ADJUDICATION: 10
+
+No_PST_vs_PST_Full
+------------------
+Games: 100
+Draws: 1
+White wins: 59
+Black wins: 40
+Average plies: 116.32
+Engine scores:
+  No PST: 49.5 / 100
+  PST Full: 50.5 / 100
+End reasons:
+  CHECKMATE_OR_NO_MOVE: 86
+  MAX_PLIES_ADJUDICATION: 14
+
+PST_Half_vs_PST_Full
+--------------------
+Games: 100
+Draws: 0
+White wins: 51
+Black wins: 49
+Average plies: 107.71
+Engine scores:
+  PST Full: 49.0 / 100
+  PST Half: 51.0 / 100
+End reasons:
+  CHECKMATE_OR_NO_MOVE: 90
+  MAX_PLIES_ADJUDICATION: 10
+
+SEARCH STATS
+============
+
+Current Engine BLACK
+--------------------
+Moves: 2041
+Average depth: 9.49 / 10.00
+Full-depth rate: 67.0%
+Average nodes: 71860
+Average time: 593.98 ms
+Average NPS: 150245
+Average TT hits: 3605
+Average TT cutoffs: 1225
+
+Current Engine WHITE
+--------------------
+Moves: 3225
+Average depth: 9.52 / 10.00
+Full-depth rate: 67.3%
+Average nodes: 73970
+Average time: 591.66 ms
+Average NPS: 153272
+Average TT hits: 3744
+Average TT cutoffs: 1237
+
+No PST BLACK
+------------
+Moves: 4154
+Average depth: 9.69 / 10.00
+Full-depth rate: 77.6%
+Average nodes: 60254
+Average time: 485.78 ms
+Average NPS: 160041
+Average TT hits: 3350
+Average TT cutoffs: 1250
+
+No PST WHITE
+------------
+Moves: 6395
+Average depth: 9.69 / 10.00
+Full-depth rate: 77.1%
+Average nodes: 58387
+Average time: 472.75 ms
+Average NPS: 165186
+Average TT hits: 3245
+Average TT cutoffs: 1262
+
+PST Full BLACK
+--------------
+Moves: 6381
+Average depth: 9.70 / 10.00
+Full-depth rate: 78.0%
+Average nodes: 61801
+Average time: 465.64 ms
+Average NPS: 174538
+Average TT hits: 3368
+Average TT cutoffs: 1259
+
+PST Full WHITE
+--------------
+Moves: 4214
+Average depth: 9.67 / 10.00
+Full-depth rate: 76.0%
+Average nodes: 64206
+Average time: 488.68 ms
+Average NPS: 168123
+Average TT hits: 3435
+Average TT cutoffs: 1301
+
+PST Half BLACK
+--------------
+Moves: 5009
+Average depth: 9.64 / 10.00
+Full-depth rate: 73.6%
+Average nodes: 63684
+Average time: 509.00 ms
+Average NPS: 160427
+Average TT hits: 3453
+Average TT cutoffs: 1304
+
+PST Half WHITE
+--------------
+Moves: 5098
+Average depth: 9.69 / 10.00
+Full-depth rate: 77.0%
+Average nodes: 62167
+Average time: 484.39 ms
+Average NPS: 166363
+Average TT hits: 3252
+Average TT cutoffs: 1216
+
+RawDepth4AlphaBeta BLACK
+------------------------
+Moves: 3208
+Average depth: 4.00 / 4.00
+Full-depth rate: 100.0%
+Average nodes: 56300
+Average time: 501.70 ms
+Average NPS: 155995
+Average TT hits: 0
+Average TT cutoffs: 0
+
+RawDepth4AlphaBeta WHITE
+------------------------
+Moves: 2067
+Average depth: 4.00 / 4.00
+Full-depth rate: 100.0%
+Average nodes: 58133
+Average time: 545.48 ms
+Average NPS: 157148
+Average TT hits: 0
+Average TT cutoffs: 0

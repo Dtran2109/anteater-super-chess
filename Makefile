@@ -73,6 +73,7 @@ install:
 	@echo "Run full app:              ./$(APP_BIN)"
 	@echo "Build engine tester:       make engine_match"
 	@echo "Run engine tester:         ./$(ENGINE_MATCH_BIN) 20 6 test/run1 10 1000 fast 1024"
+	@echo "Run parallel engine test:  ./scripts/run_engine_match_parallel.sh test/run1 100 6 10 1000 fast 20 20480"
 	@echo "Build self-play generator: make selfplay"
 	@echo "Run self-play:             ./$(SELFPLAY_BIN) training_data.csv 3000 120 10 1000 fast 23 1 1024"
 	@echo "Run parallel self-play:    ./scripts/run_selfplay_parallel.sh training_data.csv 3000 120 10 1000 fast 30 23 20480"

@@ -1,0 +1,7 @@
+Version,Depth,Move sample,Nodes,Time,Avg time/move,NPS,TT hits,TT cutoffs,Result
+Apply/undo only,4,J2G2,705843,"6,949.46 ms","1,901.42 ms",101568,N/A,N/A,"Faster foundation, but still slow"
+Move ordering attempt,4,J7J8,1066413,"11,919.04 ms","2,840.50 ms",89471,N/A,N/A,Worse; ordering overhead too high
+TT + Zobrist,4,I1J3,254029,"2,588.30 ms","2,414.35 ms",98145,not shown,not shown,"Reduced nodes, but overhead still high"
+TT + cached move ordering,4,F3G4,3466,12.94 ms,598.99 ms,267831,95,89,Big improvement
+TT + cached move ordering,5,G5G4,503427,"5,455.56 ms","2,505.27 ms",92278,10703,10253,Depth 5 became viable
+Iterative deepening + TT,5/5,J7J5,2051927,"20,398.95 ms","3,100.43 ms",100590,74981,67476,Slower; not worth keeping yet

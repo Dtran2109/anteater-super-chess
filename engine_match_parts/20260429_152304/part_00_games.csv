@@ -1,0 +1,9 @@
+matchup,game_id,white_engine,black_engine,pst_white,pst_black,winner,plies,end_reason,final_eval_pst0,final_eval_pst50,final_eval_pst100
+Current_vs_RawDepth4AlphaBeta,1,Current Engine,RawDepth4AlphaBeta,100,0,BLACK,90,CHECKMATE_OR_NO_MOVE,-4107,-4084,-4061
+Current_vs_RawDepth4AlphaBeta,2,RawDepth4AlphaBeta,Current Engine,0,100,WHITE,17,CHECKMATE_OR_NO_MOVE,1114,1051,987
+No_PST_vs_PST_Half,1,No PST,PST Half,0,50,WHITE,113,CHECKMATE_OR_NO_MOVE,3974,3964,3953
+No_PST_vs_PST_Half,2,PST Half,No PST,50,0,WHITE,67,CHECKMATE_OR_NO_MOVE,966,971,976
+No_PST_vs_PST_Full,1,No PST,PST Full,0,100,WHITE,63,CHECKMATE_OR_NO_MOVE,65,58,51
+No_PST_vs_PST_Full,2,PST Full,No PST,100,0,BLACK,46,CHECKMATE_OR_NO_MOVE,-769,-686,-602
+PST_Half_vs_PST_Full,1,PST Half,PST Full,50,100,BLACK,28,CHECKMATE_OR_NO_MOVE,-106,-159,-213
+PST_Half_vs_PST_Full,2,PST Full,PST Half,100,50,BLACK,128,CHECKMATE_OR_NO_MOVE,-4826,-4776,-4726

@@ -46,8 +46,8 @@
 #define EVAL_WEIGHT_PAWN_STRUCTURE 0.0
 #endif
 
-#define LEARNED_BONUS_SCALE 0.15
-static int g_pstScalePercent = 50;
+static int g_pstScalePercent = 0;
+static int g_learnedEvalEnabled = 0;
 
 
 //precondition: Take in the piece square table scale percent
@@ -72,6 +72,20 @@ void setPstScalePercent(int percent)
 int getPstScalePercent(void)
 {
     return g_pstScalePercent;
+}
+
+//precondition: Take in a boolean-like integer
+//postcondition: Enable or disable learned residual evaluation
+void setLearnedEvalEnabled(int enabled)
+{
+    g_learnedEvalEnabled = enabled ? 1 : 0;
+}
+
+//precondition: None
+//postcondition: Return integer if learned residual evaluation is enabled
+int getLearnedEvalEnabled(void)
+{
+    return g_learnedEvalEnabled;
 }
 
 //precondition: Take in the side color
@@ -651,7 +665,7 @@ int evaluatePosition(const GameState *state, PieceColor side) {
     int passedPawns;
     int pawnStructure;
     int score;
-    double learned;
+    double learned = 0.0;
     PieceColor enemy = oppositeColorLocal(side);
 
     if (isKingDead(state, side)) return -1000000;
@@ -681,18 +695,21 @@ score = material
       + pawnStructure
       + ((pstScore * g_pstScalePercent) / 100);
 
-    learned =
-    EVAL_BIAS +
-    EVAL_WEIGHT_MATERIAL * material +
-    EVAL_WEIGHT_MOBILITY * mobility +
-    EVAL_WEIGHT_PAWN_PROGRESS * pawnProgress +
-    EVAL_WEIGHT_ANTEATER_ACTIVITY * anteaterActivity +
-    EVAL_WEIGHT_KING_SAFETY * kingSafety +
-    EVAL_WEIGHT_HANGING_PIECES * hangingPieces +
-    EVAL_WEIGHT_KING_ESCAPE * kingEscape +
-    EVAL_WEIGHT_ANTEATER_CAPTURE_POTENTIAL * anteaterCapturePotential +
-    EVAL_WEIGHT_PASSED_PAWNS * passedPawns +
-    EVAL_WEIGHT_PAWN_STRUCTURE * pawnStructure;
+    if (g_learnedEvalEnabled)
+    {
+        learned =
+        EVAL_BIAS +
+        EVAL_WEIGHT_MATERIAL * material +
+        EVAL_WEIGHT_MOBILITY * mobility +
+        EVAL_WEIGHT_PAWN_PROGRESS * pawnProgress +
+        EVAL_WEIGHT_ANTEATER_ACTIVITY * anteaterActivity +
+        EVAL_WEIGHT_KING_SAFETY * kingSafety +
+        EVAL_WEIGHT_HANGING_PIECES * hangingPieces +
+        EVAL_WEIGHT_KING_ESCAPE * kingEscape +
+        EVAL_WEIGHT_ANTEATER_CAPTURE_POTENTIAL * anteaterCapturePotential +
+        EVAL_WEIGHT_PASSED_PAWNS * passedPawns +
+        EVAL_WEIGHT_PAWN_STRUCTURE * pawnStructure;
+    }
 
 return score + (int)(EVAL_RESIDUAL_SCALE * learned);
 }
