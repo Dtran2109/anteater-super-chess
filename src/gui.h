@@ -13,6 +13,8 @@ void drawMoveHighlights(SDL_Renderer *renderer, const GameState *state, const Mo
 void drawBoardLabels(SDL_Renderer *renderer, TTF_Font *labelFont);
 void drawPieces(SDL_Renderer *renderer, TTF_Font *pieceFont, const GameState *state, SDL_Texture *anteaterWhite, SDL_Texture *anteaterBlack);
 void drawGameOverMessage(SDL_Renderer *renderer, TTF_Font *labelFont, const char *message);
+int setGuiDebugLogPath(const char *path);
+void closeGuiDebugLog(void);
 int runGuiGame(GameState *state, GameMode mode, PieceColor playerColor);
 int isHumanTurn(const GameState *state, GameMode mode, PieceColor playerColor);
 int isCpuTurn(const GameState *state, GameMode mode, PieceColor playerColor);

@@ -42,6 +42,14 @@ Move chooseBestMoveDepth(const GameState *state, PieceColor cpuSide, int depth);
 //postcondition: Set the CPU search time limit used for deep searches
 void setCpuSearchTimeLimitMs(int milliseconds);
 
+//precondition: Take in nonzero to enable the opening book, zero to disable it
+//postcondition: Set whether chooseBestMoveDepth may return a book move
+void setCpuOpeningBookEnabled(int enabled);
+
+//precondition: None
+//postcondition: Return nonzero when opening-book moves are enabled
+int getCpuOpeningBookEnabled(void);
+
 //precondition: Take in a preset name: fast, balanced, or strong
 //postcondition: Apply the requested CPU search preset
 void setCpuSearchPreset(const char *presetName);
@@ -53,6 +61,18 @@ unsigned long setCpuTranspositionTableSizeMb(int megabytes);
 //precondition: None
 //postcondition: Return the currently allocated CPU transposition table size in MB
 unsigned long getCpuTranspositionTableSizeMb(void);
+
+//precondition: None
+//postcondition: Return the number of valid CPU transposition table entries
+unsigned long long getCpuTranspositionTableUsedEntries(void);
+
+//precondition: None
+//postcondition: Return the number of allocated CPU transposition table entries
+unsigned long long getCpuTranspositionTableCapacityEntries(void);
+
+//precondition: None
+//postcondition: Return the percentage of valid CPU transposition table entries
+double getCpuTranspositionTableFillPercent(void);
 
 //precondition: None
 //postcondition: Return the active CPU search preset name

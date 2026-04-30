@@ -1362,6 +1362,7 @@ int main(int argc, char **argv)
     int games = 100;
     int randomOpeningPlies = DEFAULT_RANDOM_OPENING_PLIES;
     int ttMb = 0;
+    int openingBookEnabled = 1;
     unsigned int randomSeed;
     const char *outputPrefix = "engine_match";
 
@@ -1429,6 +1430,11 @@ int main(int argc, char **argv)
         randomSeed = (unsigned int)strtoul(argv[11], NULL, 10);
     }
 
+    if (argc >= 13)
+    {
+        openingBookEnabled = atoi(argv[12]) ? 1 : 0;
+    }
+
     snprintf(gameLogPath, sizeof(gameLogPath), "%s_games.csv", outputPrefix);
     snprintf(moveLogPath, sizeof(moveLogPath), "%s_moves.csv", outputPrefix);
     snprintf(summaryLogPath, sizeof(summaryLogPath), "%s_summary.txt", outputPrefix);
@@ -1465,6 +1471,7 @@ int main(int argc, char **argv)
 
     setCpuSearchTimeLimitMs(engineMatchTimeMs);
     setCpuSearchPreset(engineMatchPreset);
+    setCpuOpeningBookEnabled(openingBookEnabled);
     setPstScalePercent(currentEnginePstScale);
     setLearnedEvalEnabled(currentEngineLearnedEval);
     if (ttMb > 0 && setCpuTranspositionTableSizeMb(ttMb) == 0u)
@@ -1504,6 +1511,7 @@ int main(int argc, char **argv)
     printf("CPU search depth: %d\n", engineMatchCpuDepth);
     printf("CPU time limit: %d ms\n", engineMatchTimeMs);
     printf("CPU preset: %s\n", getCpuSearchPresetName());
+    printf("CPU opening book: %s\n", getCpuOpeningBookEnabled() ? "on" : "off");
     printf("CPU TT: %lu MB\n", getCpuTranspositionTableSizeMb());
     printf("Match suite: %s\n", engineMatchSuite);
     printf("Current engine PST scale: %d%%\n", currentEnginePstScale);
@@ -1519,6 +1527,7 @@ int main(int argc, char **argv)
     fprintf(summaryLog, "CPU search depth: %d\n", engineMatchCpuDepth);
     fprintf(summaryLog, "CPU time limit: %d ms\n", engineMatchTimeMs);
     fprintf(summaryLog, "CPU preset: %s\n", getCpuSearchPresetName());
+    fprintf(summaryLog, "CPU opening book: %s\n", getCpuOpeningBookEnabled() ? "on" : "off");
     fprintf(summaryLog, "CPU TT: %lu MB\n", getCpuTranspositionTableSizeMb());
     fprintf(summaryLog, "Match suite: %s\n", engineMatchSuite);
     fprintf(summaryLog, "Current engine PST scale: %d%%\n", currentEnginePstScale);

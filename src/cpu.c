@@ -9,6 +9,7 @@
 #include "board.h"
 #include "eval.h"
 #include "types.h"
+#include "generated_opening_book.h"
 
 #define CPU_SEARCH_DEPTH 10
 #define CPU_QUIESCENCE_DEPTH 1
@@ -157,6 +158,7 @@ static clock_t searchStartClock;
 static int searchTimeLimitMs;
 static int searchUseTimeLimit;
 static int searchStopped;
+static int cpuOpeningBookEnabled = 1;
 static int cpuSearchTimeLimitMs = CPU_DEEP_SEARCH_TIME_MS;
 static unsigned long searchNodeCount;
 static unsigned long searchTtHits;
@@ -169,6 +171,8 @@ static double totalSearchTimeMs;
 static CpuSearchStats lastSearchStats;
 static Move killerMoves[CPU_MAX_SEARCH_PLY][2];
 static int historyScores[2][BOARD_ROWS * BOARD_COLS][BOARD_ROWS * BOARD_COLS];
+
+static uint64_t hashPosition(const GameState *state, PieceColor sideToMove);
 
 static int allocateTranspositionTable(size_t entryCount)
 {
@@ -368,6 +372,231 @@ static int sideHasNonPawnMaterial(const GameState *state, PieceColor side)
     }
 
     return 0;
+}
+
+static char openingBookPieceChar(ChessPiece piece)
+{
+    char ch = '.';
+
+    switch (piece.type)
+    {
+        case PAWN:
+            ch = 'P';
+            break;
+        case ROOK:
+            ch = 'R';
+            break;
+        case KING:
+            ch = 'K';
+            break;
+        case QUEEN:
+            ch = 'Q';
+            break;
+        case KNIGHT:
+            ch = 'N';
+            break;
+        case BISHOP:
+            ch = 'B';
+            break;
+        case ANTEATER:
+            ch = 'A';
+            break;
+        case EMPTY:
+        default:
+            ch = '.';
+            break;
+    }
+
+    if (piece.color == BLACK && ch >= 'A' && ch <= 'Z')
+    {
+        ch = (char)(ch - 'A' + 'a');
+    }
+
+    return ch;
+}
+
+static int boardMatchesOpeningBookString(const GameState *state, const char *board)
+{
+    int row;
+    int col;
+    int index = 0;
+
+    if (state == NULL || board == NULL)
+    {
+        return 0;
+    }
+
+    for (row = 0; row < BOARD_ROWS; row++)
+    {
+        for (col = 0; col < BOARD_COLS; col++)
+        {
+            char expected = board[index++];
+
+            if (expected == '\0' ||
+                openingBookPieceChar(state->squares[row][col]) != expected)
+            {
+                return 0;
+            }
+        }
+
+        if (row != BOARD_ROWS - 1)
+        {
+            if (board[index++] != '/')
+            {
+                return 0;
+            }
+        }
+    }
+
+    return board[index] == '\0';
+}
+
+//precondition: Take in a board coordinate like E2
+//postcondition: Return integer if the coordinate was parsed
+static int parseBookSquare(const char *text, Position *pos)
+{
+    char file;
+    char rank;
+
+    if (text == NULL || pos == NULL)
+    {
+        return 0;
+    }
+
+    file = text[0];
+    rank = text[1];
+
+    if (file >= 'a' && file <= 'z')
+    {
+        file = (char)(file - 'a' + 'A');
+    }
+
+    if (file < 'A' || file >= 'A' + BOARD_COLS)
+    {
+        return 0;
+    }
+
+    if (rank < '1' || rank > '8')
+    {
+        return 0;
+    }
+
+    pos->col = file - 'A';
+    pos->row = BOARD_ROWS - (rank - '0');
+
+    return isPositionInBounds(*pos);
+}
+
+//precondition: Take in a move coordinate like E2E4
+//postcondition: Return the parsed move, or an invalid move
+static Move parseBookMove(const char *text)
+{
+    Move move = makeInvalidMove();
+
+    if (text == NULL)
+    {
+        return move;
+    }
+
+    if (!parseBookSquare(text, &move.start))
+    {
+        return makeInvalidMove();
+    }
+
+    if (!parseBookSquare(text + 2, &move.dest))
+    {
+        return makeInvalidMove();
+    }
+
+    move.promotionGoal = EMPTY;
+    return move;
+}
+
+//precondition: Take in a legal move list and candidate move
+//postcondition: Return the matching legal move, preserving promotion fields
+static Move legalBookMove(const MoveList *legalMoves, Move candidate)
+{
+    int i;
+
+    if (legalMoves == NULL || !moveIsValid(candidate))
+    {
+        return makeInvalidMove();
+    }
+
+    for (i = 0; i < legalMoves->count; i++)
+    {
+        Move legal = legalMoves->moves[i];
+
+        if (legal.start.row == candidate.start.row &&
+            legal.start.col == candidate.start.col &&
+            legal.dest.row == candidate.dest.row &&
+            legal.dest.col == candidate.dest.col)
+        {
+            return legal;
+        }
+    }
+
+    return makeInvalidMove();
+}
+
+//precondition: Take in a game state, side, and legal moves
+//postcondition: Return an exact-position opening-book move, or invalid move
+static Move chooseOpeningBookMove(const GameState *state,
+                                  PieceColor side,
+                                  const MoveList *legalMoves)
+{
+    GameState initial;
+    GameState line;
+    MoveRecord record;
+    Move move;
+    uint64_t key;
+    size_t i;
+
+    if (state == NULL || legalMoves == NULL)
+    {
+        return makeInvalidMove();
+    }
+
+    for (i = 0; i < GENERATED_OPENING_BOOK_COUNT; i++)
+    {
+        const GeneratedOpeningBookEntry *entry = &GENERATED_OPENING_BOOK[i];
+
+        if (entry->side == side &&
+            boardMatchesOpeningBookString(state, entry->board))
+        {
+            move = legalBookMove(legalMoves, parseBookMove(entry->move));
+            if (moveIsValid(move))
+            {
+                return move;
+            }
+        }
+    }
+
+    key = hashPosition(state, side);
+
+    initializeGameState(&initial);
+    initial.currentTurn = WHITE;
+
+    if (side == WHITE && key == hashPosition(&initial, WHITE))
+    {
+        return legalBookMove(legalMoves, parseBookMove("F2F3"));
+    }
+
+    line = initial;
+    move = parseBookMove("C2C4");
+    if (isMoveLegal(&line, move))
+    {
+        applyMoveRecord(&line, move, &record);
+
+        if (side == BLACK && key == hashPosition(&line, BLACK))
+        {
+            return legalBookMove(legalMoves, parseBookMove("F7F6"));
+        }
+
+        undoMove(&line, &record);
+    }
+
+    return makeInvalidMove();
 }
 
 //precondition: Take in a search ply
@@ -1163,6 +1392,35 @@ Move chooseBestMoveDepth(const GameState *state, PieceColor cpuSide, int depth)
         return makeInvalidMove();
     }
 
+    if (cpuOpeningBookEnabled)
+    {
+        bestMove = chooseOpeningBookMove(state, cpuSide, &legalMoves);
+        if (moveIsValid(bestMove))
+        {
+            GameState bookState = *state;
+            bookState.currentTurn = cpuSide;
+
+            lastSearchStats.bestMove = bestMove;
+            lastSearchStats.side = cpuSide;
+            lastSearchStats.requestedDepth = depth;
+            lastSearchStats.completedDepth = 0;
+            lastSearchStats.score = evaluatePosition(&bookState, cpuSide);
+            lastSearchStats.nodes = 0u;
+            lastSearchStats.totalNodes = totalSearchNodeCount;
+            lastSearchStats.timeMs = 0.0;
+            lastSearchStats.averageTimeMs = (totalSearchCount > 0u)
+                ? totalSearchTimeMs / (double)totalSearchCount
+                : 0.0;
+            lastSearchStats.nps = 0u;
+            lastSearchStats.ttHits = 0u;
+            lastSearchStats.ttCutoffs = 0u;
+            lastSearchStats.totalTtHits = totalSearchTtHits;
+            lastSearchStats.totalTtCutoffs = totalSearchTtCutoffs;
+
+            return bestMove;
+        }
+    }
+
     root = *state;
     root.currentTurn = cpuSide;
     bestMove = legalMoves.moves[0];
@@ -1368,6 +1626,20 @@ void setCpuSearchTimeLimitMs(int milliseconds)
     }
 }
 
+//precondition: Take in nonzero to enable the opening book, zero to disable it
+//postcondition: Set whether chooseBestMoveDepth may return a book move
+void setCpuOpeningBookEnabled(int enabled)
+{
+    cpuOpeningBookEnabled = enabled ? 1 : 0;
+}
+
+//precondition: None
+//postcondition: Return nonzero when opening-book moves are enabled
+int getCpuOpeningBookEnabled(void)
+{
+    return cpuOpeningBookEnabled;
+}
+
 //precondition: Take in a preset name: fast, balanced, strong, sharp, or storm
 //postcondition: Apply the requested CPU search preset
 void setCpuSearchPreset(const char *presetName)
@@ -1435,6 +1707,56 @@ unsigned long getCpuTranspositionTableSizeMb(void)
 
     bytes = transpositionTableSize * sizeof(*transpositionTable);
     return (unsigned long)(bytes / (1024u * 1024u));
+}
+
+//precondition: None
+//postcondition: Return the number of valid CPU transposition table entries
+unsigned long long getCpuTranspositionTableUsedEntries(void)
+{
+    unsigned long long used = 0u;
+
+    if (!ensureTranspositionTable())
+    {
+        return 0u;
+    }
+
+    for (size_t i = 0; i < transpositionTableSize; i++)
+    {
+        if (transpositionTable[i].valid)
+        {
+            used++;
+        }
+    }
+
+    return used;
+}
+
+//precondition: None
+//postcondition: Return the number of allocated CPU transposition table entries
+unsigned long long getCpuTranspositionTableCapacityEntries(void)
+{
+    if (!ensureTranspositionTable())
+    {
+        return 0u;
+    }
+
+    return (unsigned long long)transpositionTableSize;
+}
+
+//precondition: None
+//postcondition: Return the percentage of valid CPU transposition table entries
+double getCpuTranspositionTableFillPercent(void)
+{
+    unsigned long long capacity = getCpuTranspositionTableCapacityEntries();
+    unsigned long long used;
+
+    if (capacity == 0u)
+    {
+        return 0.0;
+    }
+
+    used = getCpuTranspositionTableUsedEntries();
+    return ((double)used * 100.0) / (double)capacity;
 }
 
 //precondition: None
