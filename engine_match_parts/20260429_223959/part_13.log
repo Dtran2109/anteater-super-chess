@@ -1,0 +1,414 @@
+===== ENGINE MATCH TEST =====
+Games per matchup: 3
+Random opening plies: 6
+CPU search depth: 10
+CPU time limit: 3000 ms
+CPU preset: balanced
+CPU TT: 681 MB
+Match suite: raw
+Current engine PST scale: 0%
+Current engine learned eval: off
+Random seed: 43
+Game log: engine_match_parts/20260429_223959/part_13_games.csv
+Move log: engine_match_parts/20260429_223959/part_13_moves.csv
+Summary log: engine_match_parts/20260429_223959/part_13_summary.txt
+
+CPU depth=8/10 side=WHITE move=E2H5 score=76 nodes=153600 total_nodes=153600 time=3008.41 ms avg=3008.41 ms nps=51056 tt_hits=6551 tt_cutoffs=2048 total_tt_hits=6551 total_tt_cutoffs=2048
+RAW depth=4/4 side=BLACK move=H8C3 score=-18 nodes=93533 total_nodes=93533 time=1237.21 ms nps=75599
+CPU depth=8/10 side=WHITE move=B2C3 score=63 nodes=165888 total_nodes=319488 time=3015.34 ms avg=3011.87 ms nps=55014 tt_hits=12180 tt_cutoffs=4629 total_tt_hits=18731 total_tt_cutoffs=6677
+RAW depth=4/4 side=BLACK move=C8F5 score=-112 nodes=83411 total_nodes=176944 time=1101.44 ms nps=75729
+CPU depth=9/10 side=WHITE move=H5G5 score=147 nodes=172032 total_nodes=491520 time=3028.37 ms avg=3017.37 ms nps=56806 tt_hits=12238 tt_cutoffs=2507 total_tt_hits=30969 total_tt_cutoffs=9184
+RAW depth=4/4 side=BLACK move=F5C2 score=-146 nodes=77336 total_nodes=254280 time=1038.29 ms nps=74484
+CPU depth=9/10 side=WHITE move=D1E2 score=117 nodes=169984 total_nodes=661504 time=3012.34 ms avg=3016.11 ms nps=56429 tt_hits=11616 tt_cutoffs=3496 total_tt_hits=42585 total_tt_cutoffs=12680
+RAW depth=4/4 side=BLACK move=C2D3 score=-126 nodes=85519 total_nodes=339799 time=1071.50 ms nps=79812
+CPU depth=9/10 side=WHITE move=G5D5 score=127 nodes=176128 total_nodes=837632 time=3017.46 ms avg=3016.38 ms nps=58369 tt_hits=10896 tt_cutoffs=2370 total_tt_hits=53481 total_tt_cutoffs=15050
+RAW depth=4/4 side=BLACK move=D3E2 score=-150 nodes=39821 total_nodes=379620 time=529.20 ms nps=75247
+CPU depth=9/10 side=WHITE move=F1E2 score=186 nodes=174080 total_nodes=1011712 time=3000.61 ms avg=3013.75 ms nps=58014 tt_hits=9296 tt_cutoffs=2522 total_tt_hits=62777 total_tt_cutoffs=17572
+RAW depth=4/4 side=BLACK move=C7C6 score=-142 nodes=80306 total_nodes=459926 time=912.65 ms nps=87991
+CPU depth=10/10 side=WHITE move=D5I5 score=152 nodes=185254 total_nodes=1196966 time=2919.16 ms avg=3000.24 ms nps=63461 tt_hits=13781 tt_cutoffs=2968 total_tt_hits=76558 total_tt_cutoffs=20540
+RAW depth=4/4 side=BLACK move=I8H6 score=-592 nodes=8061 total_nodes=467987 time=83.75 ms nps=96255
+CPU depth=10/10 side=WHITE move=I5I7 score=531 nodes=179811 total_nodes=1376777 time=2791.64 ms avg=2974.17 ms nps=64410 tt_hits=13685 tt_cutoffs=3635 total_tt_hits=90243 total_tt_cutoffs=24175
+RAW depth=4/4 side=BLACK move=J8J6 score=-718 nodes=44240 total_nodes=512227 time=461.73 ms nps=95814
+CPU depth=9/10 side=WHITE move=I7J6 score=736 nodes=196608 total_nodes=1573385 time=3012.15 ms avg=2978.39 ms nps=65271 tt_hits=9939 tt_cutoffs=3516 total_tt_hits=100182 total_tt_cutoffs=27691
+RAW depth=4/4 side=BLACK move=H6G4 score=-956 nodes=39402 total_nodes=551629 time=375.72 ms nps=104870
+CPU depth=9/10 side=WHITE move=J6J5 score=950 nodes=198656 total_nodes=1772041 time=3007.70 ms avg=2981.32 ms nps=66049 tt_hits=9256 tt_cutoffs=3019 total_tt_hits=109438 total_tt_cutoffs=30710
+RAW depth=4/4 side=BLACK move=G4H2 score=-976 nodes=57973 total_nodes=609602 time=540.49 ms nps=107260
+CPU depth=10/10 side=WHITE move=J5J4 score=911 nodes=147144 total_nodes=1919185 time=2057.50 ms avg=2897.33 ms nps=71515 tt_hits=16036 tt_cutoffs=3050 total_tt_hits=125474 total_tt_cutoffs=33760
+RAW depth=4/4 side=BLACK move=G8G7 score=-1088 nodes=3652 total_nodes=613254 time=30.41 ms nps=120084
+CPU depth=10/10 side=WHITE move=J4J8 score=1102 nodes=124481 total_nodes=2043666 time=1836.10 ms avg=2808.90 ms nps=67796 tt_hits=7094 tt_cutoffs=1496 total_tt_hits=132568 total_tt_cutoffs=35256
+RAW depth=4/4 side=BLACK move=G7G8 score=-1090 nodes=2917 total_nodes=616171 time=23.86 ms nps=122259
+CPU depth=10/10 side=WHITE move=J8J4 score=911 nodes=91634 total_nodes=2135300 time=1183.29 ms avg=2683.85 ms nps=77440 tt_hits=9175 tt_cutoffs=1809 total_tt_hits=141743 total_tt_cutoffs=37065
+RAW depth=4/4 side=BLACK move=F8G8 score=197 nodes=879 total_nodes=617050 time=6.64 ms nps=132299
+CPU depth=9/10 side=WHITE move=C1A3 score=-132 nodes=221184 total_nodes=2356484 time=3029.08 ms avg=2708.51 ms nps=73020 tt_hits=15462 tt_cutoffs=3545 total_tt_hits=157205 total_tt_cutoffs=40610
+RAW depth=4/4 side=BLACK move=H2J1 score=213 nodes=37978 total_nodes=655028 time=328.55 ms nps=115592
+CPU depth=8/10 side=WHITE move=A1B1 score=-146 nodes=198656 total_nodes=2555140 time=3015.88 ms avg=2729.00 ms nps=65870 tt_hits=6426 tt_cutoffs=1543 total_tt_hits=163631 total_tt_cutoffs=42153
+RAW depth=4/4 side=BLACK move=E8D7 score=228 nodes=43128 total_nodes=698156 time=396.13 ms nps=108872
+CPU depth=8/10 side=WHITE move=F2F3 score=-162 nodes=192512 total_nodes=2747652 time=3010.84 ms avg=2746.62 ms nps=63939 tt_hits=6821 tt_cutoffs=1930 total_tt_hits=170452 total_tt_cutoffs=44083
+RAW depth=4/4 side=BLACK move=E7E5 score=228 nodes=95541 total_nodes=793697 time=1087.85 ms nps=87825
+CPU depth=8/10 side=WHITE move=D2D3 score=-142 nodes=225280 total_nodes=2972932 time=3022.29 ms avg=2762.83 ms nps=74539 tt_hits=7783 tt_cutoffs=1742 total_tt_hits=178235 total_tt_cutoffs=45825
+RAW depth=4/4 side=BLACK move=F7F5 score=236 nodes=76692 total_nodes=870389 time=858.53 ms nps=89328
+CPU depth=8/10 side=WHITE move=G2G3 score=-244 nodes=204800 total_nodes=3177732 time=3002.74 ms avg=2776.16 ms nps=68204 tt_hits=8846 tt_cutoffs=2362 total_tt_hits=187081 total_tt_cutoffs=48187
+RAW depth=4/4 side=BLACK move=H7H5 score=244 nodes=72396 total_nodes=942785 time=799.14 ms nps=90592
+CPU depth=7/10 side=WHITE move=I1J3 score=-242 nodes=192512 total_nodes=3370244 time=3002.08 ms avg=2788.05 ms nps=64126 tt_hits=7865 tt_cutoffs=2473 total_tt_hits=194946 total_tt_cutoffs=50660
+RAW depth=4/4 side=BLACK move=D7F7 score=252 nodes=67006 total_nodes=1009791 time=761.15 ms nps=88032
+CPU depth=9/10 side=WHITE move=C3C4 score=-289 nodes=202752 total_nodes=3572996 time=3028.95 ms avg=2800.10 ms nps=66938 tt_hits=10564 tt_cutoffs=2717 total_tt_hits=205510 total_tt_cutoffs=53377
+RAW depth=4/4 side=BLACK move=A7A5 score=232 nodes=75940 total_nodes=1085731 time=904.15 ms nps=83990
+CPU depth=8/10 side=WHITE move=J3H4 score=20 nodes=196608 total_nodes=3769604 time=3000.76 ms avg=2809.65 ms nps=65519 tt_hits=6946 tt_cutoffs=1975 total_tt_hits=212456 total_tt_cutoffs=55352
+RAW depth=4/4 side=BLACK move=B7B5 score=228 nodes=108208 total_nodes=1193939 time=1284.99 ms nps=84209
+CPU depth=8/10 side=WHITE move=A3D6 score=-333 nodes=204800 total_nodes=3974404 time=3000.97 ms avg=2818.35 ms nps=68244 tt_hits=10769 tt_cutoffs=2411 total_tt_hits=223225 total_tt_cutoffs=57763
+RAW depth=4/4 side=BLACK move=B8D7 score=244 nodes=90463 total_nodes=1284402 time=1062.78 ms nps=85118
+CPU depth=8/10 side=WHITE move=D6C7 score=-234 nodes=212992 total_nodes=4187396 time=3004.87 ms avg=2826.46 ms nps=70882 tt_hits=9057 tt_cutoffs=3549 total_tt_hits=232282 total_tt_cutoffs=61312
+RAW depth=4/4 side=BLACK move=D8E8 score=336 nodes=94834 total_nodes=1379236 time=877.56 ms nps=108065
+CPU depth=7/10 side=WHITE move=F3F4 score=-214 nodes=208896 total_nodes=4396292 time=3009.99 ms avg=2834.10 ms nps=69400 tt_hits=9592 tt_cutoffs=2258 total_tt_hits=241874 total_tt_cutoffs=63570
+RAW depth=4/4 side=BLACK move=B5C4 score=348 nodes=96165 total_nodes=1475401 time=1166.38 ms nps=82447
+CPU depth=9/10 side=WHITE move=H1C6 score=-207 nodes=221184 total_nodes=4617476 time=3007.41 ms avg=2841.04 ms nps=73546 tt_hits=9073 tt_cutoffs=2682 total_tt_hits=250947 total_tt_cutoffs=66252
+RAW depth=4/4 side=BLACK move=A8A6 score=256 nodes=101182 total_nodes=1576583 time=1242.75 ms nps=81417
+CPU depth=7/10 side=WHITE move=C6D7 score=-212 nodes=217088 total_nodes=4834564 time=3022.48 ms avg=2848.01 ms nps=71824 tt_hits=12199 tt_cutoffs=4925 total_tt_hits=263146 total_tt_cutoffs=71177
+RAW depth=4/4 side=BLACK move=F7D7 score=368 nodes=97581 total_nodes=1674164 time=1269.09 ms nps=76890
+CPU depth=8/10 side=WHITE move=D3C4 score=-374 nodes=225280 total_nodes=5059844 time=3019.05 ms avg=2854.35 ms nps=74619 tt_hits=12331 tt_cutoffs=3027 total_tt_hits=275477 total_tt_cutoffs=74204
+RAW depth=4/4 side=BLACK move=D7C7 score=599 nodes=89002 total_nodes=1763166 time=1172.50 ms nps=75907
+CPU depth=8/10 side=WHITE move=B1C1 score=-420 nodes=221184 total_nodes=5281028 time=3002.15 ms avg=2859.63 ms nps=73675 tt_hits=8031 tt_cutoffs=2994 total_tt_hits=283508 total_tt_cutoffs=77198
+RAW depth=4/4 side=BLACK move=C7G7 score=495 nodes=70814 total_nodes=1833980 time=930.79 ms nps=76079
+CPU depth=8/10 side=WHITE move=G1G2 score=-699 nodes=276480 total_nodes=5557508 time=3018.53 ms avg=2865.11 ms nps=91594 tt_hits=12670 tt_cutoffs=2760 total_tt_hits=296178 total_tt_cutoffs=79958
+RAW depth=4/4 side=BLACK move=G7G3 score=616 nodes=84991 total_nodes=1918971 time=1058.66 ms nps=80281
+CPU depth=9/10 side=WHITE move=C1J1 score=-928 nodes=288768 total_nodes=5846276 time=3010.59 ms avg=2869.96 ms nps=95917 tt_hits=15313 tt_cutoffs=5118 total_tt_hits=311491 total_tt_cutoffs=85076
+RAW depth=4/4 side=BLACK move=G3H4 score=718 nodes=43358 total_nodes=1962329 time=351.00 ms nps=123527
+CPU depth=9/10 side=WHITE move=J2J4 score=-1123 nodes=292864 total_nodes=6139140 time=3001.25 ms avg=2874.19 ms nps=97580 tt_hits=17950 tt_cutoffs=5063 total_tt_hits=329441 total_tt_cutoffs=90139
+RAW depth=4/4 side=BLACK move=E5F4 score=820 nodes=53268 total_nodes=2015597 time=418.65 ms nps=127236
+CPU depth=10/10 side=WHITE move=G2F3 score=-1265 nodes=251133 total_nodes=6390273 time=2495.26 ms avg=2862.35 ms nps=100643 tt_hits=17818 tt_cutoffs=4514 total_tt_hits=347259 total_tt_cutoffs=94653
+RAW depth=4/4 side=BLACK move=F4E3 score=825 nodes=46274 total_nodes=2061871 time=587.33 ms nps=78787
+CPU depth=10/10 side=WHITE move=F3E3 score=-1471 nodes=234271 total_nodes=6624544 time=2494.64 ms avg=2851.21 ms nps=93909 tt_hits=16756 tt_cutoffs=4371 total_tt_hits=364015 total_tt_cutoffs=99024
+RAW depth=4/4 side=BLACK move=H4C4 score=1014 nodes=56492 total_nodes=2118363 time=726.18 ms nps=77793
+CPU depth=10/10 side=WHITE move=E2F2 score=-1479 nodes=141396 total_nodes=6765940 time=1444.56 ms avg=2809.84 ms nps=97881 tt_hits=12884 tt_cutoffs=3919 total_tt_hits=376899 total_tt_cutoffs=102943
+RAW depth=4/4 side=BLACK move=C4A2 score=1032 nodes=69478 total_nodes=2187841 time=914.02 ms nps=76013
+CPU depth=10/10 side=WHITE move=E3E2 score=-1418 nodes=123741 total_nodes=6889681 time=1202.21 ms avg=2763.90 ms nps=102928 tt_hits=9060 tt_cutoffs=3616 total_tt_hits=385959 total_tt_cutoffs=106559
+RAW depth=4/4 side=BLACK move=A2C4 score=1031 nodes=58466 total_nodes=2246307 time=717.73 ms nps=81460
+CPU depth=10/10 side=WHITE move=I2I3 score=-1344 nodes=252046 total_nodes=7141727 time=2533.36 ms avg=2757.50 ms nps=99490 tt_hits=12663 tt_cutoffs=3349 total_tt_hits=398622 total_tt_cutoffs=109908
+RAW depth=4/4 side=BLACK move=E8F7 score=1039 nodes=64130 total_nodes=2310437 time=866.14 ms nps=74041
+CPU depth=9/10 side=WHITE move=J1G1 score=-1432 nodes=296960 total_nodes=7438687 time=3011.46 ms avg=2764.36 ms nps=98609 tt_hits=17548 tt_cutoffs=4636 total_tt_hits=416170 total_tt_cutoffs=114544
+RAW depth=4/4 side=BLACK move=G8H8 score=1039 nodes=13244 total_nodes=2323681 time=178.01 ms nps=74401
+CPU depth=10/10 side=WHITE move=G1D1 score=-1156 nodes=309139 total_nodes=7747826 time=2873.83 ms avg=2767.24 ms nps=107570 tt_hits=13083 tt_cutoffs=3813 total_tt_hits=429253 total_tt_cutoffs=118357
+RAW depth=4/4 side=BLACK move=A5A4 score=1048 nodes=86781 total_nodes=2410462 time=1002.60 ms nps=86555
+CPU depth=10/10 side=WHITE move=D1D7 score=-1353 nodes=152037 total_nodes=7899863 time=1323.53 ms avg=2730.23 ms nps=114872 tt_hits=11671 tt_cutoffs=3813 total_tt_hits=440924 total_tt_cutoffs=122170
+RAW depth=4/4 side=BLACK move=F7F6 score=1052 nodes=94512 total_nodes=2504974 time=1205.55 ms nps=78397
+CPU depth=10/10 side=WHITE move=D7D8 score=-1249 nodes=189397 total_nodes=8089260 time=1795.48 ms avg=2706.86 ms nps=105485 tt_hits=16036 tt_cutoffs=3372 total_tt_hits=456960 total_tt_cutoffs=125542
+RAW depth=4/4 side=BLACK move=H8I7 score=1053 nodes=9267 total_nodes=2514241 time=119.91 ms nps=77282
+CPU depth=10/10 side=WHITE move=D8D7 score=-1361 nodes=246172 total_nodes=8335432 time=2247.72 ms avg=2695.66 ms nps=109520 tt_hits=14099 tt_cutoffs=3398 total_tt_hits=471059 total_tt_cutoffs=128940
+RAW depth=4/4 side=BLACK move=I7J8 score=1055 nodes=24447 total_nodes=2538688 time=316.42 ms nps=77261
+CPU depth=10/10 side=WHITE move=D7D8 score=-1219 nodes=129591 total_nodes=8465023 time=1232.11 ms avg=2660.81 ms nps=105178 tt_hits=7900 tt_cutoffs=2590 total_tt_hits=478959 total_tt_cutoffs=131530
+RAW depth=4/4 side=BLACK move=J8J7 score=1055 nodes=6414 total_nodes=2545102 time=83.50 ms nps=76818
+CPU depth=10/10 side=WHITE move=D8D7 score=-1254 nodes=167094 total_nodes=8632117 time=1606.85 ms avg=2636.30 ms nps=103988 tt_hits=9300 tt_cutoffs=3234 total_tt_hits=488259 total_tt_cutoffs=134764
+RAW depth=4/4 side=BLACK move=J7J8 score=1055 nodes=17820 total_nodes=2562922 time=228.49 ms nps=77988
+CPU depth=10/10 side=WHITE move=E2F3 score=-1243 nodes=210199 total_nodes=8842316 time=2005.36 ms avg=2621.96 ms nps=104818 tt_hits=12875 tt_cutoffs=3680 total_tt_hits=501134 total_tt_cutoffs=138444
+RAW depth=4/4 side=BLACK move=A4A3 score=1055 nodes=72006 total_nodes=2634928 time=881.13 ms nps=81720
+CPU depth=9/10 side=WHITE move=J4J5 score=-1198 nodes=321536 total_nodes=9163852 time=3009.89 ms avg=2630.58 ms nps=106826 tt_hits=14059 tt_cutoffs=5404 total_tt_hits=515193 total_tt_cutoffs=143848
+RAW depth=4/4 side=BLACK move=A3A2 score=1055 nodes=68551 total_nodes=2703479 time=854.66 ms nps=80208
+CPU depth=10/10 side=WHITE move=D7D8 score=-1926 nodes=178330 total_nodes=9342182 time=1900.34 ms avg=2614.71 ms nps=93841 tt_hits=15525 tt_cutoffs=3721 total_tt_hits=530718 total_tt_cutoffs=147569
+RAW depth=4/4 side=BLACK move=J8I7 score=1056 nodes=2398 total_nodes=2705877 time=38.72 ms nps=61936
+CPU depth=9/10 side=WHITE move=D8D7 score=-1849 nodes=319488 total_nodes=9661670 time=3000.21 ms avg=2622.91 ms nps=106488 tt_hits=30558 tt_cutoffs=10641 total_tt_hits=561276 total_tt_cutoffs=158210
+RAW depth=4/4 side=BLACK move=I7J6 score=1174 nodes=8495 total_nodes=2714372 time=90.54 ms nps=93821
+CPU depth=10/10 side=WHITE move=F2G3 score=-2460 nodes=282639 total_nodes=9944309 time=2512.27 ms avg=2620.61 ms nps=112503 tt_hits=31456 tt_cutoffs=13472 total_tt_hits=592732 total_tt_cutoffs=171682
+RAW depth=4/4 side=BLACK move=A2A1 score=1834 nodes=69525 total_nodes=2783897 time=1064.28 ms nps=65326
+CPU depth=10/10 side=WHITE move=F3G2 score=-9999994 nodes=211462 total_nodes=10155771 time=2280.18 ms avg=2613.66 ms nps=92739 tt_hits=17841 tt_cutoffs=5987 total_tt_hits=610573 total_tt_cutoffs=177669
+RAW depth=4/4 side=BLACK move=A1G1 score=2345 nodes=197527 total_nodes=2981424 time=3401.67 ms nps=58067
+CPU depth=9/10 side=WHITE move=I3I4 score=-9999999 nodes=290816 total_nodes=10446587 time=3011.65 ms avg=2621.62 ms nps=96563 tt_hits=13401 tt_cutoffs=7551 total_tt_hits=623974 total_tt_cutoffs=185220
+RAW depth=4/4 side=BLACK move=C4G4 score=999999 nodes=44580 total_nodes=3026004 time=712.54 ms nps=62565
+RAW depth=4/4 side=WHITE move=F2F4 score=-92 nodes=47179 total_nodes=3073183 time=485.23 ms nps=97230
+CPU depth=7/10 side=BLACK move=F7F6 score=130 nodes=149504 total_nodes=10596091 time=3028.36 ms avg=2629.59 ms nps=49368 tt_hits=4911 tt_cutoffs=1164 total_tt_hits=628885 total_tt_cutoffs=186384
+RAW depth=4/4 side=WHITE move=B2B3 score=-78 nodes=78926 total_nodes=3152109 time=709.39 ms nps=111259
+CPU depth=8/10 side=BLACK move=E8I4 score=287 nodes=161792 total_nodes=10757883 time=3035.47 ms avg=2637.40 ms nps=53300 tt_hits=5598 tt_cutoffs=1121 total_tt_hits=634483 total_tt_cutoffs=187505
+RAW depth=4/4 side=WHITE move=C2C4 score=-66 nodes=91035 total_nodes=3243144 time=1051.76 ms nps=86554
+CPU depth=9/10 side=BLACK move=C8I2 score=558 nodes=169984 total_nodes=10927867 time=3013.55 ms avg=2644.50 ms nps=56406 tt_hits=12276 tt_cutoffs=3467 total_tt_hits=646759 total_tt_cutoffs=190972
+RAW depth=4/4 side=WHITE move=H1I2 score=-431 nodes=55673 total_nodes=3298817 time=675.24 ms nps=82448
+CPU depth=9/10 side=BLACK move=I4I2 score=612 nodes=188416 total_nodes=11116283 time=3031.59 ms avg=2651.66 ms nps=62150 tt_hits=15638 tt_cutoffs=5603 total_tt_hits=662397 total_tt_cutoffs=196575
+RAW depth=4/4 side=WHITE move=J1J3 score=-736 nodes=53116 total_nodes=3351933 time=571.53 ms nps=92937
+CPU depth=8/10 side=BLACK move=I2I1 score=483 nodes=178176 total_nodes=11294459 time=3023.12 ms avg=2658.42 ms nps=58937 tt_hits=13634 tt_cutoffs=3129 total_tt_hits=676031 total_tt_cutoffs=199704
+RAW depth=4/4 side=WHITE move=E1G3 score=-775 nodes=51468 total_nodes=3403401 time=599.15 ms nps=85901
+CPU depth=9/10 side=BLACK move=I1G3 score=409 nodes=182272 total_nodes=11476731 time=3016.69 ms avg=2664.82 ms nps=60421 tt_hits=5798 tt_cutoffs=2067 total_tt_hits=681829 total_tt_cutoffs=201771
+RAW depth=4/4 side=WHITE move=J3G3 score=-411 nodes=40051 total_nodes=3443452 time=435.37 ms nps=91992
+CPU depth=8/10 side=BLACK move=E7E6 score=416 nodes=182272 total_nodes=11659003 time=3000.23 ms avg=2670.70 ms nps=60752 tt_hits=5908 tt_cutoffs=2135 total_tt_hits=687737 total_tt_cutoffs=203906
+RAW depth=4/4 side=WHITE move=C4D5 score=-419 nodes=35794 total_nodes=3479246 time=409.02 ms nps=87510
+CPU depth=10/10 side=BLACK move=E6D5 score=374 nodes=179477 total_nodes=11838480 time=2694.40 ms avg=2671.11 ms nps=66611 tt_hits=6688 tt_cutoffs=2686 total_tt_hits=694425 total_tt_cutoffs=206592
+RAW depth=4/4 side=WHITE move=D2D3 score=-427 nodes=60442 total_nodes=3539688 time=681.47 ms nps=88693
+CPU depth=7/10 side=BLACK move=B8A6 score=532 nodes=184320 total_nodes=12022800 time=3027.78 ms avg=2677.15 ms nps=60876 tt_hits=4672 tt_cutoffs=1439 total_tt_hits=699097 total_tt_cutoffs=208031
+RAW depth=4/4 side=WHITE move=E2E4 score=-407 nodes=104239 total_nodes=3643927 time=1209.44 ms nps=86187
+CPU depth=8/10 side=BLACK move=A6B4 score=537 nodes=208896 total_nodes=12231696 time=3022.27 ms avg=2682.91 ms nps=69118 tt_hits=5329 tt_cutoffs=1542 total_tt_hits=704426 total_tt_cutoffs=209573
+RAW depth=4/4 side=WHITE move=E4D5 score=-415 nodes=45383 total_nodes=3689310 time=521.27 ms nps=87062
+CPU depth=8/10 side=BLACK move=B7B6 score=447 nodes=196608 total_nodes=12428304 time=3029.62 ms avg=2688.59 ms nps=64895 tt_hits=6679 tt_cutoffs=1818 total_tt_hits=711105 total_tt_cutoffs=211391
+RAW depth=4/4 side=WHITE move=D5D6 score=-403 nodes=52988 total_nodes=3742298 time=613.45 ms nps=86377
+CPU depth=8/10 side=BLACK move=G7G5 score=564 nodes=184320 total_nodes=12612624 time=3013.27 ms avg=2693.83 ms nps=61169 tt_hits=6715 tt_cutoffs=2176 total_tt_hits=717820 total_tt_cutoffs=213567
+RAW depth=4/4 side=WHITE move=F4G5 score=-318 nodes=44361 total_nodes=3786659 time=515.14 ms nps=86113
+CPU depth=10/10 side=BLACK move=F6F5 score=387 nodes=145120 total_nodes=12757744 time=2253.75 ms avg=2686.84 ms nps=64390 tt_hits=9863 tt_cutoffs=3527 total_tt_hits=727683 total_tt_cutoffs=217094
+RAW depth=4/4 side=WHITE move=A1B1 score=-317 nodes=49971 total_nodes=3836630 time=584.08 ms nps=85555
+CPU depth=9/10 side=BLACK move=H8E5 score=402 nodes=188416 total_nodes=12946160 time=3025.33 ms avg=2692.13 ms nps=62279 tt_hits=8191 tt_cutoffs=2792 total_tt_hits=735874 total_tt_cutoffs=219886
+RAW depth=4/4 side=WHITE move=G3F3 score=-313 nodes=60674 total_nodes=3897304 time=709.09 ms nps=85565
+CPU depth=9/10 side=BLACK move=E5D6 score=396 nodes=190464 total_nodes=13136624 time=3008.34 ms avg=2696.99 ms nps=63312 tt_hits=5875 tt_cutoffs=1460 total_tt_hits=741749 total_tt_cutoffs=221346
+RAW depth=4/4 side=WHITE move=F3F5 score=-299 nodes=57846 total_nodes=3955150 time=718.74 ms nps=80482
+CPU depth=9/10 side=BLACK move=F8E8 score=230 nodes=198656 total_nodes=13335280 time=3017.96 ms avg=2701.86 ms nps=65824 tt_hits=12463 tt_cutoffs=3293 total_tt_hits=754212 total_tt_cutoffs=224639
+RAW depth=4/4 side=WHITE move=A3C4 score=-299 nodes=85526 total_nodes=4040676 time=1073.73 ms nps=79652
+CPU depth=8/10 side=BLACK move=D6H2 score=543 nodes=200704 total_nodes=13535984 time=3003.29 ms avg=2706.36 ms nps=66828 tt_hits=7940 tt_cutoffs=1845 total_tt_hits=762152 total_tt_cutoffs=226484
+RAW depth=4/4 side=WHITE move=C1F4 score=-377 nodes=79156 total_nodes=4119832 time=1070.86 ms nps=73918
+CPU depth=10/10 side=BLACK move=H2G1 score=657 nodes=182977 total_nodes=13718961 time=2772.64 ms avg=2707.33 ms nps=65993 tt_hits=9837 tt_cutoffs=2857 total_tt_hits=771989 total_tt_cutoffs=229341
+RAW depth=4/4 side=WHITE move=C4D6 score=-381 nodes=94359 total_nodes=4214191 time=1344.30 ms nps=70192
+CPU depth=10/10 side=BLACK move=E8D7 score=492 nodes=122240 total_nodes=13841201 time=1725.43 ms avg=2693.10 ms nps=70846 tt_hits=10564 tt_cutoffs=2827 total_tt_hits=782553 total_tt_cutoffs=232168
+RAW depth=4/4 side=WHITE move=F5F7 score=-391 nodes=92879 total_nodes=4307070 time=1312.92 ms nps=70742
+CPU depth=10/10 side=BLACK move=D7E6 score=479 nodes=127156 total_nodes=13968357 time=1806.30 ms avg=2680.43 ms nps=70395 tt_hits=10072 tt_cutoffs=4298 total_tt_hits=792625 total_tt_cutoffs=236466
+RAW depth=4/4 side=WHITE move=F7F6 score=-382 nodes=86455 total_nodes=4393525 time=1248.93 ms nps=69223
+CPU depth=9/10 side=BLACK move=E6D7 score=577 nodes=196608 total_nodes=14164965 time=3002.26 ms avg=2684.96 ms nps=65486 tt_hits=11829 tt_cutoffs=1804 total_tt_hits=804454 total_tt_cutoffs=238270
+RAW depth=4/4 side=WHITE move=F6F7 score=-391 nodes=104878 total_nodes=4498403 time=1530.76 ms nps=68513
+CPU depth=9/10 side=BLACK move=D7E6 score=551 nodes=208896 total_nodes=14373861 time=3012.11 ms avg=2689.51 ms nps=69352 tt_hits=18091 tt_cutoffs=5787 total_tt_hits=822545 total_tt_cutoffs=244057
+RAW depth=4/4 side=WHITE move=F1G1 score=-407 nodes=76928 total_nodes=4575331 time=1122.46 ms nps=68535
+CPU depth=9/10 side=BLACK move=B4D3 score=345 nodes=204800 total_nodes=14578661 time=3005.94 ms avg=2693.84 ms nps=68131 tt_hits=12914 tt_cutoffs=3611 total_tt_hits=835459 total_tt_cutoffs=247668
+RAW depth=4/4 side=WHITE move=D6E4 score=-406 nodes=55317 total_nodes=4630648 time=772.97 ms nps=71564
+CPU depth=8/10 side=BLACK move=G8G7 score=478 nodes=204800 total_nodes=14783461 time=3015.10 ms avg=2698.18 ms nps=67924 tt_hits=11454 tt_cutoffs=2664 total_tt_hits=846913 total_tt_cutoffs=250332
+RAW depth=4/4 side=WHITE move=F7C7 score=-378 nodes=73006 total_nodes=4703654 time=1024.47 ms nps=71262
+CPU depth=9/10 side=BLACK move=C6B5 score=426 nodes=212992 total_nodes=14996453 time=3013.74 ms avg=2702.39 ms nps=70673 tt_hits=9750 tt_cutoffs=2304 total_tt_hits=856663 total_tt_cutoffs=252636
+RAW depth=4/4 side=WHITE move=F4G3 score=-390 nodes=71151 total_nodes=4774805 time=961.41 ms nps=74006
+CPU depth=8/10 side=BLACK move=J8J7 score=355 nodes=204800 total_nodes=15201253 time=3032.18 ms avg=2706.73 ms nps=67542 tt_hits=6552 tt_cutoffs=2391 total_tt_hits=863215 total_tt_cutoffs=255027
+RAW depth=4/4 side=WHITE move=C7D7 score=-374 nodes=110673 total_nodes=4885478 time=1476.77 ms nps=74942
+CPU depth=8/10 side=BLACK move=D8E8 score=179 nodes=202752 total_nodes=15404005 time=3026.57 ms avg=2710.89 ms nps=66990 tt_hits=7838 tt_cutoffs=2021 total_tt_hits=871053 total_tt_cutoffs=257048
+RAW depth=4/4 side=WHITE move=D7D3 score=-36 nodes=96110 total_nodes=4981588 time=1320.79 ms nps=72767
+CPU depth=10/10 side=BLACK move=G7G6 score=132 nodes=200298 total_nodes=15604303 time=2749.18 ms avg=2711.38 ms nps=72857 tt_hits=17209 tt_cutoffs=6093 total_tt_hits=888262 total_tt_cutoffs=263141
+RAW depth=4/4 side=WHITE move=E4D6 score=50 nodes=105938 total_nodes=5087526 time=1411.15 ms nps=75072
+CPU depth=10/10 side=BLACK move=B5B4 score=36 nodes=173749 total_nodes=15778052 time=2260.41 ms avg=2705.67 ms nps=76866 tt_hits=16651 tt_cutoffs=5855 total_tt_hits=904913 total_tt_cutoffs=268996
+RAW depth=4/4 side=WHITE move=G3E1 score=44 nodes=44909 total_nodes=5132435 time=577.78 ms nps=77726
+CPU depth=10/10 side=BLACK move=B4A3 score=278 nodes=137352 total_nodes=15915404 time=1871.40 ms avg=2695.24 ms nps=73395 tt_hits=6438 tt_cutoffs=2546 total_tt_hits=911351 total_tt_cutoffs=271542
+RAW depth=4/4 side=WHITE move=D6E8 score=-57 nodes=45636 total_nodes=5178071 time=578.98 ms nps=78821
+CPU depth=10/10 side=BLACK move=A8E8 score=387 nodes=185307 total_nodes=16100711 time=2347.46 ms avg=2690.95 ms nps=78939 tt_hits=14543 tt_cutoffs=4803 total_tt_hits=925894 total_tt_cutoffs=276345
+RAW depth=4/4 side=WHITE move=E1C3 score=-215 nodes=53718 total_nodes=5231789 time=606.45 ms nps=88578
+CPU depth=10/10 side=BLACK move=A3A2 score=218 nodes=207348 total_nodes=16308059 time=1882.85 ms avg=2681.09 ms nps=110124 tt_hits=11980 tt_cutoffs=3589 total_tt_hits=937874 total_tt_cutoffs=279934
+RAW depth=4/4 side=WHITE move=B1A1 score=-155 nodes=452861 total_nodes=5684650 time=3286.36 ms nps=137800
+CPU depth=10/10 side=BLACK move=A2B3 score=535 nodes=208714 total_nodes=16516773 time=1697.90 ms avg=2669.25 ms nps=122924 tt_hits=13996 tt_cutoffs=4274 total_tt_hits=951870 total_tt_cutoffs=284208
+RAW depth=4/4 side=WHITE move=C3E5 score=-158 nodes=105789 total_nodes=5790439 time=873.50 ms nps=121109
+CPU depth=10/10 side=BLACK move=B3C2 score=647 nodes=171653 total_nodes=16688426 time=1364.13 ms avg=2653.71 ms nps=125833 tt_hits=8841 tt_cutoffs=2759 total_tt_hits=960711 total_tt_cutoffs=286967
+RAW depth=4/4 side=WHITE move=D3D5 score=-402 nodes=116073 total_nodes=5906512 time=952.76 ms nps=121828
+CPU depth=9/10 side=BLACK move=I7I5 score=587 nodes=385024 total_nodes=17073450 time=3020.03 ms avg=2658.02 ms nps=127490 tt_hits=19685 tt_cutoffs=4247 total_tt_hits=980396 total_tt_cutoffs=291214
+RAW depth=4/4 side=WHITE move=A1A2 score=-171 nodes=84694 total_nodes=5991206 time=1105.56 ms nps=76607
+CPU depth=9/10 side=BLACK move=C2B3 score=655 nodes=249856 total_nodes=17323306 time=3008.35 ms avg=2662.09 ms nps=83054 tt_hits=13070 tt_cutoffs=4115 total_tt_hits=993466 total_tt_cutoffs=295329
+RAW depth=4/4 side=WHITE move=A2D2 score=-411 nodes=167793 total_nodes=6158999 time=1468.86 ms nps=114233
+CPU depth=10/10 side=BLACK move=I5J4 score=764 nodes=269222 total_nodes=17592528 time=2132.10 ms avg=2656.00 ms nps=126270 tt_hits=14081 tt_cutoffs=4602 total_tt_hits=1007547 total_tt_cutoffs=299931
+RAW depth=4/4 side=WHITE move=D5D3 score=-295 nodes=74539 total_nodes=6233538 time=555.51 ms nps=134180
+CPU depth=10/10 side=BLACK move=B3C4 score=782 nodes=278332 total_nodes=17870860 time=2179.68 ms avg=2650.59 ms nps=127694 tt_hits=16869 tt_cutoffs=5649 total_tt_hits=1024416 total_tt_cutoffs=305580
+RAW depth=4/4 side=WHITE move=D3C3 score=-297 nodes=69145 total_nodes=6302683 time=518.40 ms nps=133380
+CPU depth=10/10 side=BLACK move=C4B5 score=896 nodes=180280 total_nodes=18051140 time=1351.16 ms avg=2635.99 ms nps=133425 tt_hits=13528 tt_cutoffs=4185 total_tt_hits=1037944 total_tt_cutoffs=309765
+RAW depth=4/4 side=WHITE move=D2B2 score=-530 nodes=75691 total_nodes=6378374 time=596.77 ms nps=126835
+CPU depth=10/10 side=BLACK move=B5C6 score=963 nodes=153767 total_nodes=18204907 time=1109.83 ms avg=2619.03 ms nps=138550 tt_hits=13195 tt_cutoffs=4457 total_tt_hits=1051139 total_tt_cutoffs=314222
+RAW depth=4/4 side=WHITE move=E5G3 score=-546 nodes=49929 total_nodes=6428303 time=382.51 ms nps=130529
+CPU depth=10/10 side=BLACK move=G6H5 score=914 nodes=376041 total_nodes=18580948 time=2802.10 ms avg=2621.04 ms nps=134199 tt_hits=11717 tt_cutoffs=3267 total_tt_hits=1062856 total_tt_cutoffs=317489
+RAW depth=4/4 side=WHITE move=B2A2 score=-530 nodes=66112 total_nodes=6494415 time=486.68 ms nps=135842
+CPU depth=10/10 side=BLACK move=A7A5 score=1048 nodes=274722 total_nodes=18855670 time=2010.82 ms avg=2614.41 ms nps=136622 tt_hits=10216 tt_cutoffs=3041 total_tt_hits=1073072 total_tt_cutoffs=320530
+RAW depth=4/4 side=WHITE move=A2A4 score=-548 nodes=76458 total_nodes=6570873 time=565.41 ms nps=135226
+CPU depth=10/10 side=BLACK move=E8D8 score=1045 nodes=308461 total_nodes=19164131 time=2248.31 ms avg=2610.47 ms nps=137196 tt_hits=13989 tt_cutoffs=4028 total_tt_hits=1087061 total_tt_cutoffs=324558
+RAW depth=4/4 side=WHITE move=D1E2 score=-545 nodes=48289 total_nodes=6619162 time=359.80 ms nps=134210
+CPU depth=8/10 side=BLACK move=J7I7 score=1210 nodes=397312 total_nodes=19561443 time=3001.65 ms avg=2614.63 ms nps=132364 tt_hits=12130 tt_cutoffs=3227 total_tt_hits=1099191 total_tt_cutoffs=327785
+RAW depth=4/4 side=WHITE move=A4F4 score=-541 nodes=99808 total_nodes=6718970 time=785.41 ms nps=127077
+CPU depth=9/10 side=BLACK move=D8E8 score=987 nodes=389120 total_nodes=19950563 time=3005.92 ms avg=2618.75 ms nps=129451 tt_hits=13053 tt_cutoffs=4208 total_tt_hits=1112244 total_tt_cutoffs=331993
+RAW depth=4/4 side=WHITE move=F4F6 score=-308 nodes=55921 total_nodes=6774891 time=423.70 ms nps=131981
+CPU depth=10/10 side=BLACK move=C6B5 score=837 nodes=346671 total_nodes=20297234 time=2629.95 ms avg=2618.87 ms nps=131816 tt_hits=20424 tt_cutoffs=4767 total_tt_hits=1132668 total_tt_cutoffs=336760
+RAW depth=4/4 side=WHITE move=E2F3 score=-540 nodes=85274 total_nodes=6860165 time=687.49 ms nps=124036
+CPU depth=9/10 side=BLACK move=I7I6 score=824 nodes=389120 total_nodes=20686354 time=3011.70 ms avg=2622.92 ms nps=129202 tt_hits=18975 tt_cutoffs=5200 total_tt_hits=1151643 total_tt_cutoffs=341960
+RAW depth=4/4 side=WHITE move=C3B3 score=-304 nodes=65775 total_nodes=6925940 time=496.34 ms nps=132520
+CPU depth=10/10 side=BLACK move=B5C4 score=628 nodes=169273 total_nodes=20855627 time=1240.28 ms avg=2608.81 ms nps=136480 tt_hits=14454 tt_cutoffs=5314 total_tt_hits=1166097 total_tt_cutoffs=347274
+RAW depth=4/4 side=WHITE move=B3B6 score=-428 nodes=69809 total_nodes=6995749 time=543.91 ms nps=128346
+CPU depth=9/10 side=BLACK move=E8D8 score=497 nodes=399360 total_nodes=21254987 time=3011.51 ms avg=2612.88 ms nps=132611 tt_hits=33339 tt_cutoffs=10826 total_tt_hits=1199436 total_tt_cutoffs=358100
+RAW depth=4/4 side=WHITE move=F6F4 score=-190 nodes=63832 total_nodes=7059581 time=510.76 ms nps=124974
+CPU depth=10/10 side=BLACK move=C4D3 score=632 nodes=316943 total_nodes=21571930 time=2386.56 ms avg=2610.61 ms nps=132803 tt_hits=21653 tt_cutoffs=7234 total_tt_hits=1221089 total_tt_cutoffs=365334
+RAW depth=4/4 side=WHITE move=B6I6 score=-310 nodes=60407 total_nodes=7119988 time=446.45 ms nps=135303
+CPU depth=10/10 side=BLACK move=H7I6 score=566 nodes=105683 total_nodes=21677613 time=741.39 ms avg=2592.11 ms nps=142546 tt_hits=5219 tt_cutoffs=2121 total_tt_hits=1226308 total_tt_cutoffs=367455
+RAW depth=4/4 side=WHITE move=G5G6 score=-320 nodes=33478 total_nodes=7153466 time=186.77 ms nps=179250
+CPU depth=10/10 side=BLACK move=I8G7 score=563 nodes=321030 total_nodes=21998643 time=2205.75 ms avg=2588.32 ms nps=145542 tt_hits=23300 tt_cutoffs=6501 total_tt_hits=1249608 total_tt_cutoffs=373956
+RAW depth=4/4 side=WHITE move=F4A4 score=-224 nodes=43825 total_nodes=7197291 time=234.86 ms nps=186599
+CPU depth=10/10 side=BLACK move=G7E6 score=585 nodes=267084 total_nodes=22265727 time=1903.41 ms avg=2581.67 ms nps=140318 tt_hits=15166 tt_cutoffs=5532 total_tt_hits=1264774 total_tt_cutoffs=379488
+RAW depth=4/4 side=WHITE move=A4A3 score=-209 nodes=49826 total_nodes=7247117 time=295.57 ms nps=168578
+CPU depth=9/10 side=BLACK move=D3E4 score=611 nodes=425984 total_nodes=22691711 time=3004.23 ms avg=2585.73 ms nps=141794 tt_hits=15668 tt_cutoffs=5362 total_tt_hits=1280442 total_tt_cutoffs=384850
+RAW depth=4/4 side=WHITE move=A3A5 score=-219 nodes=43247 total_nodes=7290364 time=248.61 ms nps=173955
+CPU depth=10/10 side=BLACK move=D8G8 score=577 nodes=215497 total_nodes=22907208 time=1441.77 ms avg=2574.84 ms nps=149466 tt_hits=10650 tt_cutoffs=3567 total_tt_hits=1291092 total_tt_cutoffs=388417
+RAW depth=4/4 side=WHITE move=A5A4 score=-214 nodes=51437 total_nodes=7341801 time=315.17 ms nps=163205
+CPU depth=10/10 side=BLACK move=E6D4 score=602 nodes=124496 total_nodes=23031704 time=780.37 ms avg=2557.91 ms nps=159534 tt_hits=5246 tt_cutoffs=1296 total_tt_hits=1296338 total_tt_cutoffs=389713
+RAW depth=4/4 side=WHITE move=G3H2 score=-226 nodes=28790 total_nodes=7370591 time=169.10 ms nps=170256
+CPU depth=10/10 side=BLACK move=J4J3 score=790 nodes=171352 total_nodes=23203056 time=1064.09 ms avg=2543.95 ms nps=161032 tt_hits=13962 tt_cutoffs=3199 total_tt_hits=1310300 total_tt_cutoffs=392912
+RAW depth=4/4 side=WHITE move=H2D6 score=-263 nodes=35703 total_nodes=7406294 time=211.65 ms nps=168692
+CPU depth=10/10 side=BLACK move=J3J2 score=984 nodes=233651 total_nodes=23436707 time=1465.01 ms avg=2533.96 ms nps=159487 tt_hits=11124 tt_cutoffs=3306 total_tt_hits=1321424 total_tt_cutoffs=396218
+RAW depth=4/4 side=WHITE move=D6C5 score=-896 nodes=24244 total_nodes=7430538 time=151.47 ms nps=160053
+CPU depth=10/10 side=BLACK move=J2J1 score=1056 nodes=64920 total_nodes=23501627 time=408.99 ms avg=2514.46 ms nps=158731 tt_hits=4226 tt_cutoffs=1497 total_tt_hits=1325650 total_tt_cutoffs=397715
+RAW depth=4/4 side=WHITE move=G1H2 score=-905 nodes=4790 total_nodes=7435328 time=31.63 ms nps=151428
+CPU depth=10/10 side=BLACK move=J1J4 score=1317 nodes=128768 total_nodes=23630395 time=829.38 ms avg=2499.14 ms nps=155257 tt_hits=9700 tt_cutoffs=3355 total_tt_hits=1335350 total_tt_cutoffs=401070
+RAW depth=4/4 side=WHITE move=H2I2 score=-898 nodes=8742 total_nodes=7444070 time=56.89 ms nps=153670
+CPU depth=10/10 side=BLACK move=J4I4 score=1403 nodes=162747 total_nodes=23793142 time=1033.19 ms avg=2485.94 ms nps=157518 tt_hits=12681 tt_cutoffs=2624 total_tt_hits=1348031 total_tt_cutoffs=403694
+RAW depth=4/4 side=WHITE move=I2H2 score=-1018 nodes=5850 total_nodes=7449920 time=39.08 ms nps=149681
+CPU depth=10/10 side=BLACK move=I4H4 score=1406 nodes=118352 total_nodes=23911494 time=734.81 ms avg=2470.30 ms nps=161064 tt_hits=13268 tt_cutoffs=2605 total_tt_hits=1361299 total_tt_cutoffs=406299
+RAW depth=4/4 side=WHITE move=H2I1 score=-1358 nodes=6935 total_nodes=7456855 time=44.19 ms nps=156932
+CPU depth=10/10 side=BLACK move=H4I3 score=1412 nodes=144847 total_nodes=24056341 time=890.79 ms avg=2456.32 ms nps=162604 tt_hits=11412 tt_cutoffs=3474 total_tt_hits=1372711 total_tt_cutoffs=409773
+RAW depth=4/4 side=WHITE move=I1H1 score=-1360 nodes=4031 total_nodes=7460886 time=24.92 ms nps=161770
+CPU depth=10/10 side=BLACK move=G8G6 score=1289 nodes=245461 total_nodes=24301802 time=1572.32 ms avg=2448.57 ms nps=156114 tt_hits=20761 tt_cutoffs=5692 total_tt_hits=1393472 total_tt_cutoffs=415465
+RAW depth=4/4 side=WHITE move=A4D4 score=-751 nodes=74734 total_nodes=7535620 time=462.17 ms nps=161701
+CPU depth=10/10 side=BLACK move=E4E5 score=1289 nodes=97648 total_nodes=24399450 time=593.41 ms avg=2432.44 ms nps=164552 tt_hits=3654 tt_cutoffs=1332 total_tt_hits=1397126 total_tt_cutoffs=416797
+RAW depth=4/4 side=WHITE move=F3E2 score=-1131 nodes=99668 total_nodes=7635288 time=616.34 ms nps=161709
+CPU depth=10/10 side=BLACK move=I3J3 score=1699 nodes=66740 total_nodes=24466190 time=407.60 ms avg=2414.98 ms nps=163739 tt_hits=9842 tt_cutoffs=2022 total_tt_hits=1406968 total_tt_cutoffs=418819
+RAW depth=4/4 side=WHITE move=H1H2 score=-1133 nodes=15769 total_nodes=7651057 time=105.68 ms nps=149211
+CPU depth=10/10 side=BLACK move=J3J2 score=1758 nodes=58953 total_nodes=24525143 time=365.12 ms avg=2397.46 ms nps=161462 tt_hits=5614 tt_cutoffs=1687 total_tt_hits=1412582 total_tt_cutoffs=420506
+RAW depth=4/4 side=WHITE move=H2H3 score=-1233 nodes=5420 total_nodes=7656477 time=35.23 ms nps=153828
+CPU depth=10/10 side=BLACK move=J2G2 score=1814 nodes=63529 total_nodes=24588672 time=383.42 ms avg=2380.39 ms nps=165688 tt_hits=8799 tt_cutoffs=2559 total_tt_hits=1421381 total_tt_cutoffs=423065
+RAW depth=4/4 side=WHITE move=H3H4 score=-1282 nodes=6679 total_nodes=7663156 time=40.66 ms nps=164272
+CPU depth=10/10 side=BLACK move=G2E2 score=1944 nodes=98049 total_nodes=24686721 time=546.38 ms avg=2364.98 ms nps=179453 tt_hits=9847 tt_cutoffs=2788 total_tt_hits=1431228 total_tt_cutoffs=425853
+RAW depth=4/4 side=WHITE move=D4A4 score=-1252 nodes=70701 total_nodes=7733857 time=362.96 ms nps=194788
+CPU depth=10/10 side=BLACK move=E2B5 score=2169 nodes=79131 total_nodes=24765852 time=443.98 ms avg=2348.97 ms nps=178231 tt_hits=9337 tt_cutoffs=3007 total_tt_hits=1440565 total_tt_cutoffs=428860
+RAW depth=4/4 side=WHITE move=C5D4 score=-1599 nodes=48284 total_nodes=7782141 time=244.47 ms nps=197502
+CPU depth=10/10 side=BLACK move=E5E4 score=2208 nodes=142813 total_nodes=24908665 time=812.70 ms avg=2336.28 ms nps=175726 tt_hits=16798 tt_cutoffs=6385 total_tt_hits=1457363 total_tt_cutoffs=435245
+RAW depth=4/4 side=WHITE move=A4A3 score=-1603 nodes=44224 total_nodes=7826365 time=243.59 ms nps=181550
+CPU depth=10/10 side=BLACK move=E4D4 score=2214 nodes=150507 total_nodes=25059172 time=808.95 ms avg=2323.76 ms nps=186051 tt_hits=11685 tt_cutoffs=4101 total_tt_hits=1469048 total_tt_cutoffs=439346
+RAW depth=4/4 side=WHITE move=A3F3 score=-1606 nodes=68851 total_nodes=7895216 time=263.80 ms nps=260998
+CPU depth=10/10 side=BLACK move=B5G5 score=9999991 nodes=36625 total_nodes=25095797 time=178.11 ms avg=2306.31 ms nps=205626 tt_hits=4962 tt_cutoffs=1335 total_tt_hits=1474010 total_tt_cutoffs=440681
+RAW depth=4/4 side=WHITE move=H4I4 score=-2107 nodes=6990 total_nodes=7902206 time=26.70 ms nps=261807
+CPU depth=10/10 side=BLACK move=G5G4 score=9999993 nodes=69060 total_nodes=25164857 time=356.07 ms avg=2290.59 ms nps=193952 tt_hits=15594 tt_cutoffs=7829 total_tt_hits=1489604 total_tt_cutoffs=448510
+RAW depth=4/4 side=WHITE move=I4I3 score=-2113 nodes=3960 total_nodes=7906166 time=13.60 ms nps=291112
+CPU depth=10/10 side=BLACK move=G4F3 score=9999997 nodes=138777 total_nodes=25303634 time=727.91 ms avg=2278.08 ms nps=190650 tt_hits=42204 tt_cutoffs=22519 total_tt_hits=1531808 total_tt_cutoffs=471029
+RAW depth=4/4 side=WHITE move=I3H2 score=-999996 nodes=18895 total_nodes=7925061 time=27.26 ms nps=693114
+CPU depth=10/10 side=BLACK move=G6G2 score=10000000 nodes=390670 total_nodes=25694304 time=1931.95 ms avg=2275.34 ms nps=202214 tt_hits=106964 tt_cutoffs=81212 total_tt_hits=1638772 total_tt_cutoffs=552241
+RAW depth=4/4 side=WHITE move=H2H1 score=-999998 nodes=6140 total_nodes=7931201 time=7.21 ms nps=851004
+CPU depth=10/10 side=BLACK move=F3G4 score=10000000 nodes=241016 total_nodes=25935320 time=1058.46 ms avg=2265.76 ms nps=227703 tt_hits=81246 tt_cutoffs=64604 total_tt_hits=1720018 total_tt_cutoffs=616845
+CPU depth=8/10 side=WHITE move=G2G4 score=31 nodes=266240 total_nodes=26201560 time=3001.52 ms avg=2271.50 ms nps=88701 tt_hits=5719 tt_cutoffs=1180 total_tt_hits=1725737 total_tt_cutoffs=618025
+RAW depth=4/4 side=BLACK move=H6G4 score=-176 nodes=58734 total_nodes=7989935 time=447.99 ms nps=131105
+CPU depth=9/10 side=WHITE move=E1H4 score=-60 nodes=280576 total_nodes=26482136 time=3002.80 ms avg=2277.17 ms nps=93437 tt_hits=6988 tt_cutoffs=2042 total_tt_hits=1732725 total_tt_cutoffs=620067
+RAW depth=4/4 side=BLACK move=H7H5 score=-252 nodes=58771 total_nodes=8048706 time=430.42 ms nps=136543
+CPU depth=8/10 side=WHITE move=H1C6 score=-27 nodes=268288 total_nodes=26750424 time=3013.20 ms avg=2282.83 ms nps=89037 tt_hits=9763 tt_cutoffs=2168 total_tt_hits=1742488 total_tt_cutoffs=622235
+RAW depth=4/4 side=BLACK move=B7C6 score=-234 nodes=80940 total_nodes=8129646 time=572.25 ms nps=141442
+CPU depth=9/10 side=WHITE move=F1G2 score=-25 nodes=278528 total_nodes=27028952 time=3004.40 ms avg=2288.34 ms nps=92706 tt_hits=10291 tt_cutoffs=2156 total_tt_hits=1752779 total_tt_cutoffs=624391
+RAW depth=4/4 side=BLACK move=H8G7 score=-28 nodes=78242 total_nodes=8207888 time=521.62 ms nps=149996
+CPU depth=10/10 side=WHITE move=I2I3 score=-69 nodes=222217 total_nodes=27251169 time=2286.58 ms avg=2288.33 ms nps=97182 tt_hits=11802 tt_cutoffs=3936 total_tt_hits=1764581 total_tt_cutoffs=628327
+RAW depth=4/4 side=BLACK move=G7I5 score=-2 nodes=123629 total_nodes=8331517 time=883.04 ms nps=140003
+CPU depth=10/10 side=WHITE move=H4G5 score=-215 nodes=136371 total_nodes=27387540 time=1383.39 ms avg=2281.53 ms nps=98577 tt_hits=9538 tt_cutoffs=3007 total_tt_hits=1774119 total_tt_cutoffs=631334
+RAW depth=4/4 side=BLACK move=C6C5 score=-10 nodes=67013 total_nodes=8398530 time=488.57 ms nps=137161
+CPU depth=10/10 side=WHITE move=H2H4 score=92 nodes=254943 total_nodes=27642483 time=2606.94 ms avg=2283.95 ms nps=97794 tt_hits=12882 tt_cutoffs=3383 total_tt_hits=1787001 total_tt_cutoffs=634717
+RAW depth=4/4 side=BLACK move=I5H6 score=2 nodes=37588 total_nodes=8436118 time=267.13 ms nps=140712
+CPU depth=10/10 side=WHITE move=G5C5 score=-31 nodes=156594 total_nodes=27799077 time=1621.13 ms avg=2279.04 ms nps=96595 tt_hits=8450 tt_cutoffs=2894 total_tt_hits=1795451 total_tt_cutoffs=637611
+RAW depth=4/4 side=BLACK move=H6F4 score=18 nodes=39444 total_nodes=8475562 time=275.59 ms nps=143125
+CPU depth=9/10 side=WHITE move=I3I4 score=-283 nodes=292864 total_nodes=28091941 time=3019.77 ms avg=2284.49 ms nps=96982 tt_hits=8026 tt_cutoffs=2313 total_tt_hits=1803477 total_tt_cutoffs=639924
+RAW depth=4/4 side=BLACK move=H5I4 score=146 nodes=69744 total_nodes=8545306 time=539.91 ms nps=129177
+CPU depth=10/10 side=WHITE move=G2F3 score=-86 nodes=190365 total_nodes=28282306 time=1932.83 ms avg=2281.92 ms nps=98490 tt_hits=11211 tt_cutoffs=3771 total_tt_hits=1814688 total_tt_cutoffs=643695
+RAW depth=4/4 side=BLACK move=G4H2 score=253 nodes=100773 total_nodes=8646079 time=760.45 ms nps=132517
+CPU depth=10/10 side=WHITE move=F3F4 score=63 nodes=184794 total_nodes=28467100 time=1803.98 ms avg=2278.46 ms nps=102436 tt_hits=5349 tt_cutoffs=2680 total_tt_hits=1820037 total_tt_cutoffs=646375
+RAW depth=4/4 side=BLACK move=H2J1 score=-105 nodes=55687 total_nodes=8701766 time=327.21 ms nps=170188
+CPU depth=10/10 side=WHITE move=C5I5 score=166 nodes=196442 total_nodes=28663542 time=1719.71 ms avg=2274.44 ms nps=114229 tt_hits=13399 tt_cutoffs=4819 total_tt_hits=1833436 total_tt_cutoffs=651194
+RAW depth=4/4 side=BLACK move=G8G7 score=-93 nodes=7450 total_nodes=8709216 time=46.38 ms nps=160619
+CPU depth=10/10 side=WHITE move=I5I7 score=92 nodes=233248 total_nodes=28896790 time=2035.66 ms avg=2272.74 ms nps=114581 tt_hits=7114 tt_cutoffs=2517 total_tt_hits=1840550 total_tt_cutoffs=653711
+RAW depth=4/4 side=BLACK move=J8G8 score=138 nodes=53841 total_nodes=8763057 time=336.84 ms nps=159842
+CPU depth=8/10 side=WHITE move=G1F2 score=-53 nodes=329728 total_nodes=29226518 time=3012.38 ms avg=2277.98 ms nps=109457 tt_hits=19212 tt_cutoffs=3868 total_tt_hits=1859762 total_tt_cutoffs=657579
+RAW depth=4/4 side=BLACK move=A7A5 score=146 nodes=110486 total_nodes=8873543 time=651.29 ms nps=169641
+CPU depth=8/10 side=WHITE move=I7H7 score=54 nodes=335872 total_nodes=29562390 time=3012.36 ms avg=2283.15 ms nps=111497 tt_hits=7781 tt_cutoffs=2647 total_tt_hits=1867543 total_tt_cutoffs=660226
+RAW depth=4/4 side=BLACK move=J1H2 score=158 nodes=120395 total_nodes=8993938 time=694.98 ms nps=173235
+CPU depth=9/10 side=WHITE move=F4G3 score=35 nodes=342016 total_nodes=29904406 time=3013.16 ms avg=2288.26 ms nps=113507 tt_hits=17845 tt_cutoffs=4171 total_tt_hits=1885388 total_tt_cutoffs=664397
+RAW depth=4/4 side=BLACK move=I4I3 score=145 nodes=127538 total_nodes=9121476 time=788.17 ms nps=161815
+CPU depth=9/10 side=WHITE move=H7J7 score=-384 nodes=360448 total_nodes=30264854 time=3018.52 ms avg=2293.33 ms nps=119412 tt_hits=16216 tt_cutoffs=6436 total_tt_hits=1901604 total_tt_cutoffs=670833
+RAW depth=4/4 side=BLACK move=I3J2 score=142 nodes=107026 total_nodes=9228502 time=697.02 ms nps=153546
+CPU depth=10/10 side=WHITE move=G3H2 score=-562 nodes=100315 total_nodes=30365169 time=811.93 ms avg=2283.11 ms nps=123551 tt_hits=6953 tt_cutoffs=2148 total_tt_hits=1908557 total_tt_cutoffs=672981
+RAW depth=4/4 side=BLACK move=J2I1 score=42 nodes=46589 total_nodes=9275091 time=271.52 ms nps=171587
+CPU depth=10/10 side=WHITE move=H2I1 score=-244 nodes=86502 total_nodes=30451671 time=667.43 ms avg=2272.05 ms nps=129603 tt_hits=7871 tt_cutoffs=2269 total_tt_hits=1916428 total_tt_cutoffs=675250
+RAW depth=4/4 side=BLACK move=G8H8 score=-207 nodes=59427 total_nodes=9334518 time=309.33 ms nps=192117
+CPU depth=10/10 side=WHITE move=D2D3 score=167 nodes=254020 total_nodes=30705691 time=1967.19 ms avg=2269.97 ms nps=129128 tt_hits=9809 tt_cutoffs=4164 total_tt_hits=1926237 total_tt_cutoffs=679414
+RAW depth=4/4 side=BLACK move=G7F6 score=21 nodes=96010 total_nodes=9430528 time=571.60 ms nps=167966
+CPU depth=10/10 side=WHITE move=C1H6 score=696 nodes=51572 total_nodes=30757263 time=396.07 ms avg=2257.31 ms nps=130207 tt_hits=4277 tt_cutoffs=1132 total_tt_hits=1930514 total_tt_cutoffs=680546
+RAW depth=4/4 side=BLACK move=H8H6 score=-421 nodes=6288 total_nodes=9436816 time=33.20 ms nps=189386
+CPU depth=10/10 side=WHITE move=J7J8 score=373 nodes=140649 total_nodes=30897912 time=1085.67 ms avg=2249.45 ms nps=129549 tt_hits=12772 tt_cutoffs=3837 total_tt_hits=1943286 total_tt_cutoffs=684383
+RAW depth=4/4 side=BLACK move=F8G7 score=-424 nodes=2373 total_nodes=9439189 time=14.49 ms nps=163813
+CPU depth=10/10 side=WHITE move=J8E8 score=525 nodes=119767 total_nodes=31017679 time=932.45 ms avg=2240.67 ms nps=128443 tt_hits=12394 tt_cutoffs=4501 total_tt_hits=1955680 total_tt_cutoffs=688884
+RAW depth=4/4 side=BLACK move=H6H8 score=-528 nodes=34823 total_nodes=9474012 time=209.81 ms nps=165975
+CPU depth=10/10 side=WHITE move=E8E7 score=634 nodes=106713 total_nodes=31124392 time=774.64 ms avg=2230.96 ms nps=137757 tt_hits=9183 tt_cutoffs=3536 total_tt_hits=1964863 total_tt_cutoffs=692420
+RAW depth=4/4 side=BLACK move=C7C6 score=-536 nodes=69300 total_nodes=9543312 time=424.27 ms nps=163339
+CPU depth=9/10 side=WHITE move=I1H1 score=690 nodes=395264 total_nodes=31519656 time=3010.05 ms avg=2236.08 ms nps=131314 tt_hits=12828 tt_cutoffs=3486 total_tt_hits=1977691 total_tt_cutoffs=695906
+RAW depth=4/4 side=BLACK move=H8H4 score=-400 nodes=50427 total_nodes=9593739 time=291.22 ms nps=173160
+CPU depth=10/10 side=WHITE move=H1G2 score=637 nodes=373697 total_nodes=31893353 time=2787.91 ms avg=2239.69 ms nps=134041 tt_hits=14660 tt_cutoffs=5511 total_tt_hits=1992351 total_tt_cutoffs=701417
+RAW depth=4/4 side=BLACK move=D7D5 score=-813 nodes=115215 total_nodes=9708954 time=771.21 ms nps=149395
+CPU depth=9/10 side=WHITE move=G2G3 score=1090 nodes=403456 total_nodes=32296809 time=3003.23 ms avg=2244.65 ms nps=134340 tt_hits=21936 tt_cutoffs=6112 total_tt_hits=2014287 total_tt_cutoffs=707529
+RAW depth=4/4 side=BLACK move=H4H8 score=-392 nodes=282115 total_nodes=9991069 time=2108.18 ms nps=133819
+CPU depth=9/10 side=WHITE move=E2E4 score=437 nodes=407552 total_nodes=32704361 time=3000.36 ms avg=2249.52 ms nps=135834 tt_hits=16865 tt_cutoffs=4417 total_tt_hits=2031152 total_tt_cutoffs=711946
+RAW depth=4/4 side=BLACK move=D5E4 score=-400 nodes=74749 total_nodes=10065818 time=513.32 ms nps=145618
+CPU depth=10/10 side=WHITE move=D3E4 score=660 nodes=228204 total_nodes=32932565 time=1670.79 ms avg=2245.81 ms nps=136584 tt_hits=12362 tt_cutoffs=3297 total_tt_hits=2043514 total_tt_cutoffs=715243
+RAW depth=4/4 side=BLACK move=C8E6 score=-400 nodes=127702 total_nodes=10193520 time=835.34 ms nps=152873
+CPU depth=10/10 side=WHITE move=D1D2 score=564 nodes=365918 total_nodes=33298483 time=2741.11 ms avg=2248.97 ms nps=133492 tt_hits=14128 tt_cutoffs=6099 total_tt_hits=2057642 total_tt_cutoffs=721342
+RAW depth=4/4 side=BLACK move=G6G5 score=-396 nodes=123440 total_nodes=10316960 time=856.67 ms nps=144092
+CPU depth=10/10 side=WHITE move=E4E5 score=766 nodes=88788 total_nodes=33387271 time=654.66 ms avg=2238.88 ms nps=135623 tt_hits=6926 tt_cutoffs=1471 total_tt_hits=2064568 total_tt_cutoffs=722813
+RAW depth=4/4 side=BLACK move=H8H3 score=-714 nodes=51610 total_nodes=10368570 time=376.35 ms nps=137133
+CPU depth=10/10 side=WHITE move=G3G2 score=712 nodes=87206 total_nodes=33474477 time=673.59 ms avg=2229.03 ms nps=129463 tt_hits=3722 tt_cutoffs=1593 total_tt_hits=2068290 total_tt_cutoffs=724406
+RAW depth=4/4 side=BLACK move=F6E5 score=-850 nodes=49258 total_nodes=10417828 time=370.50 ms nps=132950
+CPU depth=10/10 side=WHITE move=E7G5 score=1160 nodes=245876 total_nodes=33720353 time=1851.81 ms avg=2226.68 ms nps=132776 tt_hits=16730 tt_cutoffs=3148 total_tt_hits=2085020 total_tt_cutoffs=727554
+RAW depth=4/4 side=BLACK move=G7H7 score=-952 nodes=5577 total_nodes=10423405 time=42.26 ms nps=131968
+CPU depth=10/10 side=WHITE move=G5E5 score=1277 nodes=115187 total_nodes=33835540 time=846.31 ms avg=2218.10 ms nps=136105 tt_hits=4836 tt_cutoffs=1383 total_tt_hits=2089856 total_tt_cutoffs=728937
+RAW depth=4/4 side=BLACK move=H3H4 score=-955 nodes=109314 total_nodes=10532719 time=769.34 ms nps=142087
+CPU depth=10/10 side=WHITE move=G2G3 score=1254 nodes=350610 total_nodes=34186150 time=2639.64 ms avg=2220.71 ms nps=132824 tt_hits=19203 tt_cutoffs=4728 total_tt_hits=2109059 total_tt_cutoffs=733665
+RAW depth=4/4 side=BLACK move=H4H3 score=-952 nodes=392139 total_nodes=10924858 time=2885.75 ms nps=135888
+CPU depth=10/10 side=WHITE move=G3G2 score=1181 nodes=114772 total_nodes=34300922 time=853.14 ms avg=2212.32 ms nps=134528 tt_hits=4238 tt_cutoffs=1371 total_tt_hits=2113297 total_tt_cutoffs=735036
+RAW depth=4/4 side=BLACK move=H3H4 score=-854 nodes=92726 total_nodes=11017584 time=652.70 ms nps=142065
+CPU depth=10/10 side=WHITE move=F4G3 score=1238 nodes=276103 total_nodes=34577025 time=2095.49 ms avg=2211.60 ms nps=131760 tt_hits=18100 tt_cutoffs=5244 total_tt_hits=2131397 total_tt_cutoffs=740280
+RAW depth=4/4 side=BLACK move=H4C4 score=-950 nodes=626569 total_nodes=11644153 time=4618.90 ms nps=135653
+CPU depth=10/10 side=WHITE move=G5F6 score=1346 nodes=203371 total_nodes=34780396 time=1525.97 ms avg=2207.45 ms nps=133273 tt_hits=9156 tt_cutoffs=3150 total_tt_hits=2140553 total_tt_cutoffs=743430
+RAW depth=4/4 side=BLACK move=C4H4 score=-956 nodes=138303 total_nodes=11782456 time=949.80 ms nps=145612
+CPU depth=10/10 side=WHITE move=E5J5 score=1888 nodes=78057 total_nodes=34858453 time=543.37 ms avg=2197.42 ms nps=143652 tt_hits=8179 tt_cutoffs=1744 total_tt_hits=2148732 total_tt_cutoffs=745174
+RAW depth=4/4 side=BLACK move=H7I8 score=-1353 nodes=16406 total_nodes=11798862 time=118.11 ms nps=138898
+CPU depth=10/10 side=WHITE move=J5I5 score=1938 nodes=79530 total_nodes=34937983 time=546.03 ms avg=2187.53 ms nps=145651 tt_hits=7681 tt_cutoffs=2751 total_tt_hits=2156413 total_tt_cutoffs=747925
+RAW depth=4/4 side=BLACK move=I8J8 score=-1361 nodes=8446 total_nodes=11807308 time=55.52 ms nps=152122
+CPU depth=10/10 side=WHITE move=I5H4 score=1981 nodes=173102 total_nodes=35111085 time=1116.67 ms avg=2181.16 ms nps=155015 tt_hits=10021 tt_cutoffs=3085 total_tt_hits=2166434 total_tt_cutoffs=751010
+RAW depth=4/4 side=BLACK move=D8D7 score=-1459 nodes=87295 total_nodes=11894603 time=399.03 ms nps=218766
+CPU depth=10/10 side=WHITE move=H4H6 score=1991 nodes=354548 total_nodes=35465633 time=2422.59 ms avg=2182.59 ms nps=146350 tt_hits=11367 tt_cutoffs=5369 total_tt_hits=2177801 total_tt_cutoffs=756379
+RAW depth=4/4 side=BLACK move=J8I8 score=-1457 nodes=7209 total_nodes=11901812 time=34.37 ms nps=209746
+CPU depth=10/10 side=WHITE move=F6E7 score=2017 nodes=293220 total_nodes=35758853 time=1963.21 ms avg=2181.30 ms nps=149357 tt_hits=19542 tt_cutoffs=4509 total_tt_hits=2197343 total_tt_cutoffs=760888
+RAW depth=4/4 side=BLACK move=I8J7 score=-1483 nodes=104342 total_nodes=12006154 time=521.67 ms nps=200013
+CPU depth=9/10 side=WHITE move=E7D6 score=2063 nodes=456704 total_nodes=36215557 time=3004.10 ms avg=2186.11 ms nps=152027 tt_hits=17694 tt_cutoffs=6010 total_tt_hits=2215037 total_tt_cutoffs=766898
+RAW depth=4/4 side=BLACK move=E6I2 score=-1469 nodes=126166 total_nodes=12132320 time=643.38 ms nps=196097
+CPU depth=10/10 side=WHITE move=H6J4 score=2452 nodes=197004 total_nodes=36412561 time=1433.21 ms avg=2181.73 ms nps=137456 tt_hits=23875 tt_cutoffs=5470 total_tt_hits=2238912 total_tt_cutoffs=772368
+RAW depth=4/4 side=BLACK move=J7I8 score=-1713 nodes=18669 total_nodes=12150989 time=100.42 ms nps=185907
+CPU depth=10/10 side=WHITE move=J4I3 score=2445 nodes=199392 total_nodes=36611953 time=1348.01 ms avg=2176.91 ms nps=147915 tt_hits=17769 tt_cutoffs=6795 total_tt_hits=2256681 total_tt_cutoffs=779163
+RAW depth=4/4 side=BLACK move=I8J8 score=-1823 nodes=10349 total_nodes=12161338 time=48.70 ms nps=212526
+CPU depth=10/10 side=WHITE move=I3J2 score=2866 nodes=72697 total_nodes=36684650 time=469.02 ms avg=2167.10 ms nps=154997 tt_hits=6744 tt_cutoffs=1982 total_tt_hits=2263425 total_tt_cutoffs=781145
+RAW depth=4/4 side=BLACK move=J8I8 score=-2173 nodes=4799 total_nodes=12166137 time=21.72 ms nps=220948
+CPU depth=10/10 side=WHITE move=J2I2 score=2974 nodes=145436 total_nodes=36830086 time=877.19 ms avg=2159.73 ms nps=165797 tt_hits=12799 tt_cutoffs=3023 total_tt_hits=2276224 total_tt_cutoffs=784168
+RAW depth=4/4 side=BLACK move=I8J8 score=-2273 nodes=9626 total_nodes=12175763 time=34.47 ms nps=279257
+CPU depth=10/10 side=WHITE move=I2D7 score=3140 nodes=270243 total_nodes=37100329 time=1551.41 ms avg=2156.27 ms nps=174191 tt_hits=15481 tt_cutoffs=6675 total_tt_hits=2291705 total_tt_cutoffs=790843
+RAW depth=4/4 side=BLACK move=F7F6 score=-2276 nodes=45176 total_nodes=12220939 time=135.95 ms nps=332308
+CPU depth=10/10 side=WHITE move=D6C6 score=3167 nodes=163280 total_nodes=37263609 time=925.82 ms avg=2149.32 ms nps=176362 tt_hits=12723 tt_cutoffs=4815 total_tt_hits=2304428 total_tt_cutoffs=795658
+RAW depth=4/4 side=BLACK move=A8B8 score=-2288 nodes=39934 total_nodes=12260873 time=120.41 ms nps=331641
+CPU depth=10/10 side=WHITE move=D7J1 score=3680 nodes=24219 total_nodes=37287828 time=128.71 ms avg=2137.97 ms nps=188170 tt_hits=4110 tt_cutoffs=1907 total_tt_hits=2308538 total_tt_cutoffs=797565
+RAW depth=4/4 side=BLACK move=J8I8 score=-2770 nodes=4807 total_nodes=12265680 time=16.86 ms nps=285095
+CPU depth=10/10 side=WHITE move=J1I1 score=3704 nodes=60667 total_nodes=37348495 time=333.95 ms avg=2127.89 ms nps=181666 tt_hits=7814 tt_cutoffs=2649 total_tt_hits=2316352 total_tt_cutoffs=800214
+RAW depth=4/4 side=BLACK move=I8J7 score=-2780 nodes=8750 total_nodes=12274430 time=27.83 ms nps=314375
+CPU depth=10/10 side=WHITE move=I1B8 score=3790 nodes=183985 total_nodes=37532480 time=1041.96 ms avg=2121.86 ms nps=176576 tt_hits=22008 tt_cutoffs=9559 total_tt_hits=2338360 total_tt_cutoffs=809773
+RAW depth=4/4 side=BLACK move=F6F5 score=-2886 nodes=15829 total_nodes=12290259 time=26.22 ms nps=603768
+CPU depth=10/10 side=WHITE move=B8C7 score=4029 nodes=494197 total_nodes=38026677 time=2819.60 ms avg=2125.71 ms nps=175271 tt_hits=94802 tt_cutoffs=57981 total_tt_hits=2433162 total_tt_cutoffs=867754
+RAW depth=4/4 side=BLACK move=J7I8 score=-2894 nodes=10528 total_nodes=12300787 time=16.57 ms nps=635441
+CPU depth=10/10 side=WHITE move=C7A5 score=4108 nodes=455531 total_nodes=38482208 time=2449.36 ms avg=2127.49 ms nps=185979 tt_hits=83795 tt_cutoffs=53388 total_tt_hits=2516957 total_tt_cutoffs=921142
+RAW depth=4/4 side=BLACK move=F5F4 score=-3012 nodes=12408 total_nodes=12313195 time=17.05 ms nps=727571
+CPU depth=10/10 side=WHITE move=A5C7 score=4232 nodes=415765 total_nodes=38897973 time=2145.40 ms avg=2127.59 ms nps=193793 tt_hits=78080 tt_cutoffs=55608 total_tt_hits=2595037 total_tt_cutoffs=976750
+RAW depth=4/4 side=BLACK move=F4F3 score=-3018 nodes=6702 total_nodes=12319897 time=7.69 ms nps=871408
+CPU depth=10/10 side=WHITE move=D2D3 score=9999993 nodes=375500 total_nodes=39273473 time=1999.47 ms avg=2126.89 ms nps=187799 tt_hits=77753 tt_cutoffs=47089 total_tt_hits=2672790 total_tt_cutoffs=1023839
+RAW depth=4/4 side=BLACK move=I8H8 score=-3028 nodes=4889 total_nodes=12324786 time=5.56 ms nps=878842
+CPU depth=10/10 side=WHITE move=B1D2 score=9999995 nodes=335481 total_nodes=39608954 time=1770.95 ms avg=2124.97 ms nps=189435 tt_hits=74705 tt_cutoffs=55026 total_tt_hits=2747495 total_tt_cutoffs=1078865
+RAW depth=4/4 side=BLACK move=H8G8 score=-999996 nodes=8069 total_nodes=12332855 time=8.58 ms nps=940662
+CPU depth=10/10 side=WHITE move=A1H1 score=9999997 nodes=448494 total_nodes=40057448 time=2440.65 ms avg=2126.66 ms nps=183759 tt_hits=104816 tt_cutoffs=77307 total_tt_hits=2852311 total_tt_cutoffs=1156172
+RAW depth=4/4 side=BLACK move=G8F8 score=-999998 nodes=4616 total_nodes=12337471 time=4.61 ms nps=1001518
+CPU depth=9/10 side=WHITE move=H1G1 score=10000000 nodes=514048 total_nodes=40571496 time=3007.74 ms avg=2131.38 ms nps=170908 tt_hits=98670 tt_cutoffs=72267 total_tt_hits=2950981 total_tt_cutoffs=1228439
+RAW depth=4/4 side=BLACK move=F8E8 score=-999998 nodes=4243 total_nodes=12341714 time=4.46 ms nps=951132
+CPU depth=10/10 side=WHITE move=B2B4 score=10000000 nodes=467928 total_nodes=41039424 time=2551.13 ms avg=2133.61 ms nps=183420 tt_hits=108290 tt_cutoffs=81288 total_tt_hits=3059271 total_tt_cutoffs=1309727
+RAW depth=4/4 side=BLACK move=E8F8 score=-999996 nodes=4057 total_nodes=12345771 time=4.19 ms nps=967564
+CPU depth=10/10 side=WHITE move=C6D7 score=10000000 nodes=407202 total_nodes=41446626 time=2125.81 ms avg=2133.57 ms nps=191551 tt_hits=102209 tt_cutoffs=77641 total_tt_hits=3161480 total_tt_cutoffs=1387368
+RAW depth=4/4 side=BLACK move=F8F7 score=-999998 nodes=3281 total_nodes=12349052 time=3.75 ms nps=874233
+CPU depth=10/10 side=WHITE move=C7C6 score=10000000 nodes=398956 total_nodes=41845582 time=2187.19 ms avg=2133.85 ms nps=182406 tt_hits=87631 tt_cutoffs=65133 total_tt_hits=3249111 total_tt_cutoffs=1452501
+RAW depth=4/4 side=BLACK move=F7F8 score=-999998 nodes=3471 total_nodes=12352523 time=4.45 ms nps=780175
+CPU depth=10/10 side=WHITE move=A3A4 score=10000000 nodes=378004 total_nodes=42223586 time=2041.22 ms avg=2133.36 ms nps=185185 tt_hits=81558 tt_cutoffs=60029 total_tt_hits=3330669 total_tt_cutoffs=1512530
+RAW depth=4/4 side=BLACK move=F8F7 score=-999998 nodes=3567 total_nodes=12356090 time=3.95 ms nps=903037
+CPU depth=10/10 side=WHITE move=D7D8 score=10000000 nodes=344624 total_nodes=42568210 time=1838.52 ms avg=2131.83 ms nps=187446 tt_hits=76220 tt_cutoffs=56336 total_tt_hits=3406889 total_tt_cutoffs=1568866
+RAW depth=4/4 side=BLACK move=F7F8 score=-999998 nodes=3198 total_nodes=12359288 time=4.06 ms nps=787103
+CPU depth=10/10 side=WHITE move=D8D7 score=10000000 nodes=347412 total_nodes=42915622 time=1778.70 ms avg=2130.00 ms nps=195317 tt_hits=77326 tt_cutoffs=56934 total_tt_hits=3484215 total_tt_cutoffs=1625800
+Current_vs_RawDepth4AlphaBeta, 3 games
+  Current Engine wins: 2
+  RawDepth4AlphaBeta wins: 1
+  Draws:   0
+  White wins: 1
+  Black wins: 2
+  Current Engine score: 2.0 / 3
+  RawDepth4AlphaBeta score: 1.0 / 3
+  Average plies: 134.33
+
+Logs written:
+  engine_match_parts/20260429_223959/part_13_games.csv
+  engine_match_parts/20260429_223959/part_13_moves.csv
+  engine_match_parts/20260429_223959/part_13_summary.txt

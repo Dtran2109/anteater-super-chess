@@ -1,0 +1,65 @@
+
+GAME RESULTS
+============
+
+Current_vs_RawDepth4AlphaBeta
+-----------------------------
+Games: 45
+Draws: 2
+White wins: 27
+Black wins: 16
+Average plies: 119.84
+Engine scores:
+  Current Engine: 31.0 / 45
+  RawDepth4AlphaBeta: 14.0 / 45
+End reasons:
+  CHECKMATE_OR_NO_MOVE: 31
+  MAX_PLIES_ADJUDICATION: 13
+  REPETITION: 1
+
+SEARCH STATS
+============
+
+Current Engine BLACK
+--------------------
+Moves: 925
+Average depth: 9.29 / 10.00
+Full-depth rate: 57.0%
+Average nodes: 183104
+Average time: 1975.20 ms
+Average NPS: 123010
+Average TT hits: 11934
+Average TT cutoffs: 4574
+
+Current Engine WHITE
+--------------------
+Moves: 1643
+Average depth: 9.43 / 10.00
+Full-depth rate: 60.7%
+Average nodes: 189609
+Average time: 1996.66 ms
+Average NPS: 112295
+Average TT hits: 13753
+Average TT cutoffs: 5880
+
+RawDepth4AlphaBeta BLACK
+------------------------
+Moves: 1625
+Average depth: 4.00 / 4.00
+Full-depth rate: 100.0%
+Average nodes: 59549
+Average time: 560.40 ms
+Average NPS: 173673
+Average TT hits: 0
+Average TT cutoffs: 0
+
+RawDepth4AlphaBeta WHITE
+------------------------
+Moves: 929
+Average depth: 4.00 / 4.00
+Full-depth rate: 100.0%
+Average nodes: 66646
+Average time: 700.85 ms
+Average NPS: 154021
+Average TT hits: 0
+Average TT cutoffs: 0

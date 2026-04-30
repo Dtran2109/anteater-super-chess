@@ -40,6 +40,7 @@ typedef struct
     int lmrMoveIndex;
     int lmrDeepMinDepth;
     int lmrDeepMoveIndex;
+    int researchReducedMoves;
     int nullMoveMinDepth;
     int nullMoveReduction;
     int futilityMaxDepth;
@@ -73,6 +74,7 @@ static const CpuSearchPreset CPU_PRESET_FAST = {
     CPU_LMR_MOVE_INDEX,
     CPU_LMR_DEEP_MIN_DEPTH,
     CPU_LMR_DEEP_MOVE_INDEX,
+    0,
     CPU_NULL_MOVE_MIN_DEPTH,
     CPU_NULL_MOVE_REDUCTION,
     CPU_FUTILITY_MAX_DEPTH,
@@ -88,6 +90,7 @@ static const CpuSearchPreset CPU_PRESET_BALANCED = {
     3,
     5,
     8,
+    0,
     3,
     3,
     1,
@@ -103,6 +106,39 @@ static const CpuSearchPreset CPU_PRESET_STRONG = {
     4,
     5,
     10,
+    0,
+    4,
+    2,
+    0,
+    0,
+    99,
+    MAX_MOVES
+};
+
+static const CpuSearchPreset CPU_PRESET_SHARP = {
+    "sharp",
+    3,
+    3,
+    4,
+    5,
+    10,
+    0,
+    4,
+    2,
+    0,
+    0,
+    99,
+    MAX_MOVES
+};
+
+static const CpuSearchPreset CPU_PRESET_STORM = {
+    "storm",
+    4,
+    3,
+    4,
+    5,
+    10,
+    1,
     4,
     2,
     0,
@@ -332,6 +368,18 @@ static int sideHasNonPawnMaterial(const GameState *state, PieceColor side)
     }
 
     return 0;
+}
+
+//precondition: Take in a search ply
+//postcondition: Return a mate score adjusted to prefer faster wins and slower losses
+static int matedScore(int ply)
+{
+    if (ply < 0)
+    {
+        ply = 0;
+    }
+
+    return -CPU_MATE_SCORE + ply;
 }
 
 //precondition: None
@@ -729,7 +777,7 @@ static int quiescenceSearch(GameState *state,
     {
         if (inCheck)
         {
-            return -CPU_MATE_SCORE;
+            return matedScore(0);
         }
 
         return 0;
@@ -774,7 +822,7 @@ static int quiescenceSearch(GameState *state,
 
     if (inCheck && !searchedMove)
     {
-        return -CPU_MATE_SCORE;
+        return matedScore(0);
     }
 
     return alpha;
@@ -948,7 +996,7 @@ static int alphaBeta(GameState *state,
     {
         if (inCheck)
         {
-            return -CPU_MATE_SCORE - depth;
+            return matedScore(ply);
         }
 
         return 0;
@@ -1000,6 +1048,18 @@ static int alphaBeta(GameState *state,
                                -alpha,
                                oppositeColorLocal(sideToMove),
                                ply + 1);
+
+            if (activePreset->researchReducedMoves &&
+                !searchStopped &&
+                score > alpha)
+            {
+                score = -alphaBeta(state,
+                                   depth - 1,
+                                   -beta,
+                                   -alpha,
+                                   oppositeColorLocal(sideToMove),
+                                   ply + 1);
+            }
         }
         else
         {
@@ -1308,7 +1368,7 @@ void setCpuSearchTimeLimitMs(int milliseconds)
     }
 }
 
-//precondition: Take in a preset name: fast, balanced, or strong
+//precondition: Take in a preset name: fast, balanced, strong, sharp, or storm
 //postcondition: Apply the requested CPU search preset
 void setCpuSearchPreset(const char *presetName)
 {
@@ -1320,6 +1380,14 @@ void setCpuSearchPreset(const char *presetName)
     if (strcmp(presetName, "strong") == 0)
     {
         activePreset = &CPU_PRESET_STRONG;
+    }
+    else if (strcmp(presetName, "sharp") == 0)
+    {
+        activePreset = &CPU_PRESET_SHARP;
+    }
+    else if (strcmp(presetName, "storm") == 0)
+    {
+        activePreset = &CPU_PRESET_STORM;
     }
     else if (strcmp(presetName, "balanced") == 0)
     {
